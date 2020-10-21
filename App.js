@@ -2,8 +2,9 @@ import React from 'react';
 import {createStackNavigator} from '@react-navigation/stack';
 import { NavigationContainer } from '@react-navigation/native';
 
-import profile from './components/profileScreen/profile.js';
 import {headerBackgroundColor, headerShadowColor} from './components/commons/cssVariables';
+import ProfileScreen from './components/profileScreen/index.js';
+
 const Stack = createStackNavigator();
 
 export default function App() {
@@ -15,7 +16,7 @@ export default function App() {
           shadowColor: headerShadowColor,
         }
         }}> 
-        <Stack.Screen name="Profile" component={profile} options={{title: ""}}/>
+        <Stack.Screen name="Profile" component={ProfileScreen} options={{title: ""}}/>
       </Stack.Navigator>
     </NavigationContainer>
   );
