@@ -1,12 +1,11 @@
-import {StyleSheet} from 'react-native';
+import {Dimensions, StyleSheet} from 'react-native';
 import {backgroundBodyColor} from './cssVariables';
 const backgroundStyle = StyleSheet.create({
     container: {
       display: 'flex',
-      flex: 1,
       backgroundColor: backgroundBodyColor,
-      alignItems: 'center',
-      justifyContent: 'center',
+      flexDirection: "column",
+      minHeight: Dimensions.get('window').height
     },
   });
 
