@@ -1,12 +1,15 @@
-import {Dimensions, StyleSheet} from 'react-native';
+import { StyleSheet } from 'react-native';
 import {backgroundBodyColor} from './cssVariables';
+
 const backgroundStyle = StyleSheet.create({
     container: {
+      flex: 1,
+    },
+    scrollView: {
       display: 'flex',
       backgroundColor: backgroundBodyColor,
-      flexDirection: "column",
-      minHeight: Dimensions.get('window').height
-    },
+      flexDirection: "column"
+    }
   });
 
 export default backgroundStyle;

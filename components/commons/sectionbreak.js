@@ -11,8 +11,8 @@ export default function Sectionbreak(){
 const styles = StyleSheet.create({
     container: {
         width: '92%',
-        borderWidth: 0.5,
+        borderWidth: 0.8,
         borderColor: headerBackgroundColor,
-        marginVertical: 30,
+        marginVertical: 25,
     }
 });

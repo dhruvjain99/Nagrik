@@ -1,5 +1,5 @@
 import React from 'react';
-import { Dimensions, StyleSheet, View } from 'react-native';
+import { StyleSheet, View } from 'react-native';
 import UserDisplay from './userDisplay';
 import ContactCountDisplay from './contactCountDisplay';
 import PostCountDisplay from './postCountDisplay';

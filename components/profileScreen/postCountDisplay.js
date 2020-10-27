@@ -1,6 +1,6 @@
 import React from 'react';
 import { View, StyleSheet, Text } from 'react-native';
-import { displayNameColor } from '../commons/cssVariables';
+import { displayNameColor, fontGreen } from '../commons/cssVariables';
 
 export default function PostCountDisplay(){
     return (
@@ -29,9 +29,10 @@ const styles = StyleSheet.create({
         flexDirection: 'row',
         flexWrap: 'nowrap',
         justifyContent: 'space-around',
+        marginBottom: 10
     },
     value: {
-        color: '#459135',
+        color: fontGreen,
         fontWeight: 'bold',
         fontSize: 18,
         textAlign: "center"
