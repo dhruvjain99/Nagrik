@@ -34,13 +34,13 @@ const styles = StyleSheet.create({
     value: {
         color: fontGreen,
         fontWeight: 'bold',
-        fontSize: 18,
+        fontSize: 17,
         textAlign: "center"
     },
     label: {
         color: displayNameColor,
         fontWeight: 'bold',
-        fontSize: 13,
+        fontSize: 12,
         marginTop: 2,
         textTransform: "uppercase"
     }

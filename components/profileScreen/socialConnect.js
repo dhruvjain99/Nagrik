@@ -7,10 +7,10 @@ export default function SocialConnect(){
     return (
         <View style={styles.container}>
             <View style={styles.logoContainer}> 
-                <Ionicons name="logo-facebook" size={32} color="white"/>
-                <Ionicons name="logo-twitter" size={32} color="white"/>
-                <Ionicons name="logo-instagram" size={32} color="white"/>
-                <Ionicons name="logo-twitch" size={32} color="white"/>
+                <Ionicons name="logo-facebook" size={27} color="white"/>
+                <Ionicons name="logo-twitter" size={27} color="white"/>
+                <Ionicons name="logo-instagram" size={27} color="white"/>
+                <Ionicons name="logo-twitch" size={27} color="white"/>
             </View>
             <Sectionbreak />
         </View>

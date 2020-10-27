@@ -34,7 +34,7 @@ const styles = StyleSheet.create({
     mainText: {
         color: '#fff',
         fontWeight: 'bold',
-        fontSize: 15
+        fontSize: 14
     },
     subText: {
         color: displayNameColor,
