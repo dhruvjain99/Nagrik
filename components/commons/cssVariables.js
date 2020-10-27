@@ -5,3 +5,4 @@ export const displayNameColor = '#52555b';
 export const displayNameSize = 20;
 export const displayPhotoSize = 100;
 export const contactCountDisplayContainerColor = '#1A1A1A';
+export const fontGreen = '#459135';
