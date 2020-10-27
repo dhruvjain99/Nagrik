@@ -4,6 +4,7 @@ import backgroundStyle from '../commons/backgroundStyle';
 import Profile from './profile';
 import Redirect from './redirect';
 import SocialConnect from './socialConnect';
+import Footer from './footer';
 
 export default function ProfileScreen(){
     return (
@@ -12,6 +13,7 @@ export default function ProfileScreen(){
                 <Profile />
                 <Redirect />
                 <SocialConnect />
+                <Footer />
             </ScrollView>
         </SafeAreaView>
     );
