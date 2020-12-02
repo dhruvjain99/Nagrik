@@ -45,15 +45,12 @@ function Settings() {
   );
 }
 
-
 const Tab = createBottomTabNavigator();
-
-let flag = true;
 
 export default function TabNavigation() {
   return (
       <Tab.Navigator
-        screenOptions={({ route }) => ({
+        screenOptions={({ navigation, route }) => ({
           tabBarIcon: ({ focused, color, size }) => {
             let iconName;
 
@@ -67,10 +64,7 @@ export default function TabNavigation() {
               iconName = 'ios-add-circle';
             }else if (route.name === 'Settings') {
               iconName = 'md-settings';
-              flag = false;
             }
-
-            // You can return any component that you like here!
             return <Ionicons name={iconName} size={size} color={color} />;
           },
         })}
@@ -80,14 +74,13 @@ export default function TabNavigation() {
           showLabel: false,
           activeBackgroundColor: 'dimgray',
           inactiveBackgroundColor: 'dimgray',
-          tabBarVisible: flag,
         }}
       >
         <Tab.Screen name="Home" component={HomeScreen} />
         <Tab.Screen name="Feed" component={Feed} />
         <Tab.Screen name="Event" component={Event} />
         <Tab.Screen name='Notifications' component={Notifications} />
-        <Tab.Screen name="Settings" component={ProfileScreen} />
+        <Tab.Screen name="Settings" component={ProfileScreen} options={{tabBarVisible: false,}} />
       </Tab.Navigator>
   );
 }
