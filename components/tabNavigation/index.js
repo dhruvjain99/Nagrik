@@ -4,6 +4,7 @@ import { NavigationContainer } from '@react-navigation/native';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import { Ionicons } from '@expo/vector-icons';
 import ProfileScreen from '../profileScreen/index.js';
+import LowerScreen from '../eventScreen/lowerScreen.js';
 
 function HomeScreen() {
   return (
@@ -78,7 +79,7 @@ export default function TabNavigation() {
       >
         <Tab.Screen name="Home" component={HomeScreen} />
         <Tab.Screen name="Feed" component={Feed} />
-        <Tab.Screen name="Event" component={Event} />
+        <Tab.Screen name="Event" component={LowerScreen} options={{tabBarVisible: false,}} />
         <Tab.Screen name='Notifications' component={Notifications} />
         <Tab.Screen name="Settings" component={ProfileScreen} options={{tabBarVisible: false,}} />
       </Tab.Navigator>

@@ -17,13 +17,9 @@ export default function App() {
           backgroundColor: headerBackgroundColor,
           shadowColor: headerShadowColor,
         }
-<<<<<<< HEAD
         }}>
         <Stack.Screen name="TabNavigation" component={TabNavigation} options={{title: ""}}/>
-=======
-        }}> 
         <Stack.Screen name="Screen" component={LowerScreen} options={{title: ""}}/>
->>>>>>> 737e058c40864da2ac7f54c023ea5b166f94a56a
         <Stack.Screen name="Profile" component={ProfileScreen} options={{title: ""}}/>
       </Stack.Navigator>
     </NavigationContainer>
