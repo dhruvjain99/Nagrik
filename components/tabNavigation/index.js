@@ -5,6 +5,7 @@ import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import { Ionicons } from '@expo/vector-icons';
 import ProfileScreen from '../profileScreen/index.js';
 import LowerScreen from '../eventScreen/lowerScreen.js';
+import {displayNameColor, headerBackgroundColor} from '../commons/cssVariables';
 
 function HomeScreen() {
   return (
@@ -70,11 +71,11 @@ export default function TabNavigation() {
           },
         })}
         tabBarOptions={{
-          inactiveTintColor: 'darkgray',
+          inactiveTintColor: headerBackgroundColor,
           activeTintColor: 'white',
           showLabel: false,
-          activeBackgroundColor: 'dimgray',
-          inactiveBackgroundColor: 'dimgray',
+          activeBackgroundColor: displayNameColor,
+          inactiveBackgroundColor: displayNameColor,
         }}
       >
         <Tab.Screen name="Home" component={HomeScreen} />
