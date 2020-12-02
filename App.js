@@ -1,6 +1,7 @@
 import React from 'react';
 import {createStackNavigator} from '@react-navigation/stack';
 import { NavigationContainer } from '@react-navigation/native';
+import LowerScreen from './components/eventScreen/lowerScreen.js';
 
 import {headerBackgroundColor, headerShadowColor} from './components/commons/cssVariables';
 import ProfileScreen from './components/profileScreen/index.js';
@@ -16,6 +17,7 @@ export default function App() {
           shadowColor: headerShadowColor,
         }
         }}> 
+        <Stack.Screen name="Screen" component={LowerScreen} options={{title: ""}}/>
         <Stack.Screen name="Profile" component={ProfileScreen} options={{title: ""}}/>
       </Stack.Navigator>
     </NavigationContainer>
