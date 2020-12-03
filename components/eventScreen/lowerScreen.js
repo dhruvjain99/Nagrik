@@ -1,5 +1,5 @@
-import React, { useState, useEffect, useRef } from 'react';
-import { Text, View, TouchableOpacity,Button,Alert } from 'react-native';
+import React, { useState, useEffect } from 'react';
+import { Text, View, TouchableOpacity } from 'react-native';
 import { Camera } from 'expo-camera';
 import { Ionicons } from '@expo/vector-icons';
 import * as Permissions from 'expo-permissions';
