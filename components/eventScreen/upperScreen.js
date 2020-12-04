@@ -1,12 +1,13 @@
 import React, { Component, useState } from 'react';
 import { ScrollView, SafeAreaView, Dimensions, Alert, Button, TextInput, View, StyleSheet, Text } from 'react-native';
-import fontGreen from '../commons/cssVariables';
 import { CheckBox } from 'react-native-elements'
+import { useNavigation } from '@react-navigation/native';
 
 const windowWidth = Dimensions.get('window').width;
 const windowHeight = Dimensions.get('window').height;
 
-export default function EventScreen(){
+export default function UpperScreen(){
+  const navigation = useNavigation(); 
     //variables to be sent to backend-title, desc, tag1,2,3 & location (to be added)
     const [title, setTitle] = useState("");
     const [description, setDescription] = useState("");
@@ -33,10 +34,7 @@ export default function EventScreen(){
      {
         if((validatetag(tag1) || validatetag(tag2) || validatetag(tag3)) )
         {
-            Alert.alert('Info', 
-        `${title} 
-            ${description}
-            ${tag1} ${tag2} ${tag3}`);
+            navigation.navigate('LowerScreen', {title: title});
                 //pass variables as props to camera screen & redirect
         }
         else{
@@ -110,6 +108,9 @@ export default function EventScreen(){
             /> 
             </Text>
         
+        </View>
+        <View flex={2}>
+
         </View>
         
       </View>

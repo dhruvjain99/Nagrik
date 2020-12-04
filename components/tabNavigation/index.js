@@ -5,47 +5,27 @@ import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import { Ionicons } from '@expo/vector-icons';
 import ProfileScreen from '../profileScreen/index.js';
 import LowerScreen from '../eventScreen/lowerScreen.js';
+import HomeScreen from '../homeScreen/index.js';
 import {displayNameColor, headerBackgroundColor} from '../commons/cssVariables';
-
-function HomeScreen() {
-  return (
-    <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }}>
-      <Text>Home!</Text>
-    </View>
-  );
-}
+import UpperScreen from '../eventScreen/upperScreen.js';
 
 function Feed() {
   return (
     <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }}>
-      <Text>Feed!</Text>
+      <Text>Feed screen coming soon!</Text>
     </View>
   );
 }
 
-function Event() {
-  return (
-    <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }}>
-      <Text>Event!</Text>
-    </View>
-  );
-}
 
 function Notifications() {
   return (
     <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }}>
-      <Text>Notifications!</Text>
+      <Text>Notifications screen coming soon!</Text>
     </View>
   );
 }
 
-function Settings() {
-  return (
-    <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }}>
-      <Text>Settings!</Text>
-    </View>
-  );
-}
 
 const Tab = createBottomTabNavigator();
 
@@ -80,9 +60,9 @@ export default function TabNavigation() {
       >
         <Tab.Screen name="Home" component={HomeScreen} />
         <Tab.Screen name="Feed" component={Feed} />
-        <Tab.Screen name="Event" component={LowerScreen} options={{tabBarVisible: false,}} />
+        <Tab.Screen name="Event" component={UpperScreen} options={{tabBarVisible: true,}} />
         <Tab.Screen name='Notifications' component={Notifications} />
-        <Tab.Screen name="Settings" component={ProfileScreen} options={{tabBarVisible: false,}} />
+        <Tab.Screen name="Settings" component={ProfileScreen} options={{tabBarVisible: true,}} /> 
       </Tab.Navigator>
   );
 }
