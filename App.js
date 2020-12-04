@@ -5,7 +5,11 @@ import LowerScreen from './components/eventScreen/lowerScreen.js';
 
 import {headerBackgroundColor, headerShadowColor} from './components/commons/cssVariables';
 import ProfileScreen from './components/profileScreen/index.js';
+import HomeScreen from './components/homeScreen/index.js';
+import EventScreen from './components/eventScreen/index.js';
+
 import TabNavigation from './components/tabNavigation/index.js'
+
 
 const Stack = createStackNavigator();
 
@@ -17,6 +21,9 @@ export default function App() {
           backgroundColor: headerBackgroundColor,
           shadowColor: headerShadowColor,
         }
+        }}> 
+        {/* <Stack.Screen name="Event" component={EventScreen} options={{title: ""}}/> */}
+        <Stack.Screen name="Home" component={HomeScreen} options={{title: ""}}/>
         }}>
         <Stack.Screen name="TabNavigation" component={TabNavigation} options={{title: ""}}/>
         <Stack.Screen name="Screen" component={LowerScreen} options={{title: ""}}/>
