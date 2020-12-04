@@ -15,27 +15,12 @@ const windowHeight = Dimensions.get('window').height;
 
 async function UpdateLocation(loc)
 {
-    console.log("2");
-
     let location_json = await Geocoder.from(loc)
     let location = location_json.results[0].geometry.location;
-    console.log("3")
     console.log(location);
-    // var location = {
-    //     latitude: 30.900965,
-    //     longitude: 30.857277,
-    //     latitudeDelta: 0.0922,
-    //     longitudeDelta: 0.0421,
-    //   }
-
-    console.log("4");
     return location; 
 }
 
-async function getInitialLocation()
-{
-
-}
 export default function MapDisplay()
 {
     const [searchText, setSeachText] = useState('');
@@ -307,8 +292,23 @@ export default function MapDisplay()
           ]
         }
       ];
+    const [region, setRegion] = useState({
+        latitude: 30.900965,
+        longitude: 70.857277,
+        latitudeDelta: 0.0922,
+        longitudeDelta: 0.0421,
+      });
+    const [errorMsg, setErrorMsg] = useState(null);
+
     //call API to fetch markers 
-    const markers = [
+  // axios.get('/incidents/find')
+  // .then(function (response) {
+  //   console.log(response);
+  // })
+  // .catch(function (error) {
+  //   console.log(error);
+  // });
+    let markers = [
         {latitude: 31.900965,
         longitude: 70.857277,
         description: "description goes here dhkaxc ukhjncask qiudkjasn iqwudhax oqwhljckasn iuwqdjkaxn iquwkjbcsan",
@@ -326,13 +326,6 @@ export default function MapDisplay()
         description: "xyz",
         title: "title"},                             
     ];
-    const [region, setRegion] = useState({
-            latitude: 30.900965,
-            longitude: 70.857277,
-            latitudeDelta: 0.0922,
-            longitudeDelta: 0.0421,
-          });
-    const [errorMsg, setErrorMsg] = useState(null);
 
     useEffect(() => {
         (async () => {
@@ -348,8 +341,6 @@ export default function MapDisplay()
         longitudeDelta: 0.0421,});
         })();
       }, []);
-
-
 
     return(        
         <View>
@@ -386,8 +377,7 @@ export default function MapDisplay()
             }                      
             showsUserLocation = {true} 
             maxZoomLevel={50}>
-                
-                
+                                
             {markers.map(marker => (
                 <Marker
                 coordinate={{longitude: marker.longitude, latitude: marker.latitude}}
@@ -395,12 +385,10 @@ export default function MapDisplay()
                 description={marker.description}>
                 </Marker>
             ))}
-            
- 
+             
             </MapView> 
             <View style={styles.container}>   
-                <Ionicons name="md-contact" size={35} color="white" onPress={() => navigation.navigate('Profile')}/>
-                   
+                <Ionicons name="md-contact" size={35} color="white" onPress={() => navigation.navigate('Profile')}/>                   
                 <SearchBar
                 round
                 searchIcon={{ size: 20 }}
@@ -459,7 +447,7 @@ const styles = StyleSheet.create(
     {
         position: 'absolute',
         width: windowWidth,
-        height: windowHeight*0.8,
+        height: windowHeight*0.9,
         top: 0,
                
         },  

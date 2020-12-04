@@ -3,8 +3,10 @@ import { Text, View, TouchableOpacity,Button,Alert } from 'react-native';
 import { Camera } from 'expo-camera';
 import { Ionicons } from '@expo/vector-icons';
 import * as Permissions from 'expo-permissions';
+import { useNavigation } from '@react-navigation/native';
 
 export default function LowerScreen() {
+  const navigation = useNavigation();  
   const [hasPermission, setHasPermission] = useState(null);
   const [cameraRef, setCameraRef] = useState(null)
   const [recording, setRecording] = useState(false)
@@ -63,9 +65,16 @@ if (hasPermission === null) {
                 setRecording(true)
                 video = await cameraRef.recordAsync();
                 console.log('video', video);
-            } else {
+              } 
+            else {
                 setRecording(false)
                 cameraRef.stopRecording()
+                // alert(route.params.title)
+                // console.log(route.params.paramKey)
+                alert("Incident created successfully.")
+                navigation.navigate('TabNavigation')
+               
+                //empty form
                 
             }
           }}>

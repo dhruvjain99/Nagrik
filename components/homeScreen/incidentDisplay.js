@@ -3,26 +3,10 @@ import { View, StyleSheet, Text, SafeAreaView } from 'react-native';
 import { TouchableOpacity } from 'react-native-gesture-handler';
 import {Picker} from '@react-native-picker/picker';
 
-const range = [
-    {
-      label: 'Football',
-      value: 'football',
-    },
-    {
-      label: 'Baseball',
-      value: 'baseball',
-    },
-    {
-      label: 'Hockey',
-      value: 'hockey',
-    },
-  ];
-  
-
 export default function IncidentDisplay(){
 
     const [distance, setDistance] = useState("1");
-    // const [radius, setRadius] = useState("1");
+    //call api to fetch users and incidents
     let nearbyUsers = 0;
     let nearbyIncidents = 0;    
 
@@ -34,11 +18,11 @@ export default function IncidentDisplay(){
                 <TouchableOpacity>                   
                 <Text style={styles.label}>Incidents</Text>
                 </TouchableOpacity> 
-
             <Picker
           style={styles.onePicker} itemStyle={styles.onePickerItem}
           selectedValue={distance}
           mode="dropdown"
+          //on value change, also fetch number of incidents and users
           onValueChange={(itemValue) => setDistance(itemValue)}
         >
           <Picker.Item style={styles.subtext} label="Within 1 km" value="1" />
@@ -70,7 +54,6 @@ export default function IncidentDisplay(){
 }
 const styles = StyleSheet.create({
     container: {
-    //   backgroundColor: 'orange',
       width: '100%',
       padding: '3%',
         flex:1,
