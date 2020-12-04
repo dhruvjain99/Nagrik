@@ -5,15 +5,17 @@ import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import { Ionicons } from '@expo/vector-icons';
 import ProfileScreen from '../profileScreen/index.js';
 import LowerScreen from '../eventScreen/lowerScreen.js';
+import EventScreen from '../eventScreen/index.js'
+import HomeScreen from '../homeScreen/index.js';
 import {displayNameColor, headerBackgroundColor} from '../commons/cssVariables';
 
-function HomeScreen() {
-  return (
-    <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }}>
-      <Text>Home!</Text>
-    </View>
-  );
-}
+// function HomeScreen() {
+//   return (
+//     <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }}>
+//       <Text>Home!</Text>
+//     </View>
+//   );
+// }
 
 function Feed() {
   return (
@@ -80,9 +82,9 @@ export default function TabNavigation() {
       >
         <Tab.Screen name="Home" component={HomeScreen} />
         <Tab.Screen name="Feed" component={Feed} />
-        <Tab.Screen name="Event" component={LowerScreen} options={{tabBarVisible: false,}} />
+        <Tab.Screen name="Event" component={EventScreen} options={{tabBarVisible: false,}} />
         <Tab.Screen name='Notifications' component={Notifications} />
-        <Tab.Screen name="Settings" component={ProfileScreen} options={{tabBarVisible: false,}} />
+        <Tab.Screen name="Settings" component={ProfileScreen} options={{tabBarVisible: true,}} /> 
       </Tab.Navigator>
   );
 }
