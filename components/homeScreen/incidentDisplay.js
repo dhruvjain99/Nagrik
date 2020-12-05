@@ -54,31 +54,27 @@ export default function IncidentDisplay(){
 }
 const styles = StyleSheet.create({
     container: {
-      width: '100%',
-      padding: '3%',
-        flex:1,
-        display: 'flex',
-        flexDirection: 'row',
-        flexWrap: 'nowrap',
-        justifyContent: 'space-around',
-        marginTop: '90%', 
+      padding: '1%',
+      display: 'flex',
+      flexDirection: 'row',
+      flexWrap: 'nowrap',
+      justifyContent: 'space-around',
+      marginBottom: '10%', 
     },
-    
     value: {
         color: '#56ad40',
         fontWeight: 'bold',
-        fontSize: 30,
+        fontSize: 25,
         textAlign: "center"
     },
     label: {
         color: '#fff',
         fontWeight: 'bold',
         textAlign: 'center',
-        fontSize: 24,
+        fontSize: 17,
         marginTop: 2,
         textTransform: "uppercase"
     },
-
     onePicker: {
       width: 150,
       height: 40,
@@ -89,7 +85,6 @@ const styles = StyleSheet.create({
       fontSize: 15,
       height: 40,
       color: 'white',
-      
     },
 
   });
