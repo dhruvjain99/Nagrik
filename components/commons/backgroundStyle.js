@@ -1,9 +1,10 @@
 import { StyleSheet } from 'react-native';
-import {backgroundBodyColor} from './cssVariables';
+import {backgroundBodyColor, headerBackgroundColor} from './cssVariables';
 
 const backgroundStyle = StyleSheet.create({
     container: {
       flex: 1,
+      backgroundColor: headerBackgroundColor
     },
     scrollView: {
       display: 'flex',
