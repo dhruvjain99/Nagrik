@@ -382,7 +382,9 @@ export default function MapDisplay()
                 <Marker
                 coordinate={{longitude: marker.longitude, latitude: marker.latitude}}
                 title={marker.title}
-                description={marker.description}>
+                description={marker.description}
+                onPress={() => navigation.navigate('Video')}
+                onSelect={() => navigation.navigate('Video')}>
                 </Marker>
             ))}
              
