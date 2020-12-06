@@ -5,8 +5,6 @@ import VideoPlayer from 'expo-video-player'
 
 export default class VideoScreen extends React.Component {
 	
-
-
   render() {
 	
     return (
