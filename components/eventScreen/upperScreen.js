@@ -2,6 +2,7 @@ import React, { Component, useState } from 'react';
 import { ScrollView, SafeAreaView, Dimensions, Alert, Button, TextInput, View, StyleSheet, Text } from 'react-native';
 import { CheckBox } from 'react-native-elements'
 import { useNavigation } from '@react-navigation/native';
+import { TouchableOpacity } from 'react-native-gesture-handler';
 
 const windowWidth = Dimensions.get('window').width;
 const windowHeight = Dimensions.get('window').height;
@@ -59,10 +60,7 @@ export default function UpperScreen(){
             style={styles.title}
             />
             <Text style={styles.heading}> Description </Text>
-            <TextInput
-            // multiline={true}
-            
-            
+            <TextInput            
             numberOfLines={3}
             value={description}
             onChangeText={(description) => setDescription(description)}
@@ -98,21 +96,11 @@ export default function UpperScreen(){
             onPress={()=>tag3==false?setTag3(true):setTag3(false)}
             />
           </View>
-        
-        <View style={styles.buttonContainer}>
-            <Text style={{fontSize: 30}}>
-            <Button
-            color='#fff'
-            title='Next'
-            onPress={onNext}
-            /> 
-            </Text>
-        
-        </View>
-        <View flex={2}>
-
-        </View>
-        
+        <TouchableOpacity onPress={onNext}>
+          <View  style={styles.buttonContainer}>
+            <Text style={{color:'white', fontSize: '20'}}>Next</Text>
+          </View>
+        </TouchableOpacity>
       </View>
     );
 }
@@ -132,18 +120,17 @@ heading: {
   },
   topContainer: {
     flex:4,
-    // backgroundColor: 'orange'
+    marginTop: '10%'
   },
   bottomContainer:{
-    flex:4,
+    flex:3,
     alignSelf: 'center'
-    // backgroundColor: 'blue'  
   },
   buttonContainer: {
-    flex:1,
     alignSelf: 'center',
     justifyContent: 'center',
-    width: '50%',
+    width: '40%',
+    height: 40,
     borderRadius: 10,   
     backgroundColor: '#459135',
     alignItems: 'center',
@@ -167,8 +154,8 @@ heading: {
   desc: {
     width: "100%",
     color: 'white',
-    paddingLeft: 20,
-    paddingRight: 20,
+    paddingLeft: 15,
+    paddingRight: 15,
     paddingBottom: 5,
     paddingTop: 5,
     borderWidth: 1,
