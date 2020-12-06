@@ -1,35 +1,57 @@
 import * as React from 'react';
-import { Text, View } from 'react-native';
-import { NavigationContainer } from '@react-navigation/native';
+import { Text, View, SafeAreaView } from 'react-native';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import { Ionicons } from '@expo/vector-icons';
-import ProfileScreen from '../profileScreen/index.js';
-import LowerScreen from '../eventScreen/lowerScreen.js';
 import HomeScreen from '../homeScreen/index.js';
 import {displayNameColor, headerBackgroundColor} from '../commons/cssVariables';
 import UpperScreen from '../eventScreen/upperScreen.js';
+import { StatusBar } from 'expo-status-bar';
+import backgroundStyle from '../commons/backgroundStyle';
 
 function Feed() {
   return (
-    <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }}>
-      <Text>Feed screen coming soon!</Text>
-    </View>
+    <React.Fragment>
+      <StatusBar style='light'></StatusBar>
+      <SafeAreaView style={backgroundStyle.container}>
+        <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }}>
+          <Text style= {{ color: 'white'}}>Feed screen coming soon!</Text>
+        </View>
+      </SafeAreaView>
+    </React.Fragment>
   );
 }
 
 
 function Notifications() {
   return (
-    <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }}>
-      <Text>Notifications screen coming soon!</Text>
-    </View>
+    <React.Fragment>
+      <StatusBar style='light'></StatusBar>
+      <SafeAreaView style={backgroundStyle.container}>
+        <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }}>
+          <Text style= {{ color: 'white'}}>Notifications screen coming soon!</Text>
+        </View>
+      </SafeAreaView>
+    </React.Fragment>
+  );
+}
+
+function SettingsScreen() {
+  return (
+    <React.Fragment>
+      <StatusBar style='light'></StatusBar>
+      <SafeAreaView style={backgroundStyle.container}>
+        <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }}>
+          <Text style= {{ color: 'white'}}>Settings screen coming soon!</Text>
+        </View>
+      </SafeAreaView>
+    </React.Fragment>
   );
 }
 
 
 const Tab = createBottomTabNavigator();
 
-export default function TabNavigation() {
+export default function TabNavigation(props) {
   return (
       <Tab.Navigator
         screenOptions={({ navigation, route }) => ({
@@ -47,22 +69,26 @@ export default function TabNavigation() {
             }else if (route.name === 'Settings') {
               iconName = 'md-settings';
             }
-            return <Ionicons name={iconName} size={size} color={color} />;
+            return <Ionicons name={iconName} size={29} color={color} />;
           },
         })}
         tabBarOptions={{
-          inactiveTintColor: headerBackgroundColor,
+          inactiveTintColor: displayNameColor,
           activeTintColor: 'white',
           showLabel: false,
-          activeBackgroundColor: displayNameColor,
-          inactiveBackgroundColor: displayNameColor,
+          activeBackgroundColor: headerBackgroundColor,
+          inactiveBackgroundColor: headerBackgroundColor,
+          style: {
+            backgroundColor: 'black',
+            borderTopWidth: 0
+          },
         }}
       >
-        <Tab.Screen name="Home" component={HomeScreen} />
+        <Tab.Screen name="Home" component={HomeScreen} navigationOptions={{header: null}}/>
         <Tab.Screen name="Feed" component={Feed} />
-        <Tab.Screen name="Event" component={UpperScreen} options={{tabBarVisible: true,}} />
+        <Tab.Screen name="Event" component={UpperScreen} />
         <Tab.Screen name='Notifications' component={Notifications} />
-        <Tab.Screen name="Settings" component={ProfileScreen} options={{tabBarVisible: true,}} /> 
+        <Tab.Screen name="Settings" component={SettingsScreen} /> 
       </Tab.Navigator>
   );
 }

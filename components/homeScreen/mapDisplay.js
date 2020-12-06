@@ -429,16 +429,14 @@ export default function MapDisplay()
 const styles = StyleSheet.create(
     {
         containerSearch: {
-            width: '70%',
+            width: '65%',
             height: 5,
             display: 'flex',
             flexDirection: 'row',
             flexWrap: 'nowrap',
             alignSelf: 'center',
             alignItems: 'center',
-            justifyContent: 'center',
             backgroundColor:'transparent',
-            borderColor: 'transparent',
             borderTopWidth: 0,
             borderBottomWidth: 0,
     
@@ -447,8 +445,7 @@ const styles = StyleSheet.create(
     {
         position: 'absolute',
         width: windowWidth,
-        height: windowHeight*0.9,
-        top: 0,
+        height: windowHeight,
                
         },  
         Icon: {
@@ -459,16 +456,12 @@ const styles = StyleSheet.create(
             },
         container: {
             width: '100%',
-            top: 0,
-            flex: 1,
+            top: 10,
             padding: 10,
-            paddingLeft: 10,
-            paddingRight: 10,
             display: 'flex',
             flexDirection: 'row',
             flexWrap: 'nowrap',
-            backgroundColor: 'transparent',
-            justifyContent: 'space-between',
+            justifyContent: 'space-around',
     
         },
         
@@ -478,14 +471,5 @@ const styles = StyleSheet.create(
             fontSize: 17,
             textAlign: "center"
         },
-        label: {
-            color: displayNameColor,
-            fontWeight: 'bold',
-            fontSize: 12,
-            marginTop: 2,
-            textTransform: "uppercase"
-        }
-           
-
     }
 );
