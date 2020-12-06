@@ -39,8 +39,7 @@
     "tcomb-form-native": "^0.6.20",
     "expo-secure-store": "~9.2.0",
     "@react-native-community/netinfo": "5.9.6",
-    "@react-native-community/slider": "3.0.3",
-    "expo-secure-store": "~9.2.0"
+    "@react-native-community/slider": "3.0.3"
   },
   "devDependencies": {
     "@babel/core": "~7.9.0"
