@@ -1,11 +1,14 @@
-import React from 'react';
-import { View, SafeAreaView }from 'react-native';
-import backgroundStyle from '../commons/backgroundStyle';
+import React, { Fragment } from 'react';
+import { View, SafeAreaView, Image }from 'react-native';
 import { SocialIcon } from 'react-native-elements'
 import * as Google from 'expo-google-app-auth';
+import * as SecureStore from 'expo-secure-store';
+import { CommonActions, useNavigation} from '@react-navigation/native';
+import { backgroundBodyColor } from '../commons/cssVariables';
+import { StatusBar } from 'expo-status-bar';
 
 export default function LoginScreen(){
-    
+    const navigation = useNavigation();
     async function clickHandler() { 
         try {
             let config = {
@@ -28,20 +31,39 @@ export default function LoginScreen(){
                 });
                 let responseJson = await loginResponse.json();
                 console.log(responseJson);
+                await SecureStore.setItemAsync("token", responseJson["data"]["token"]);
+                navigation.navigate('TabNavigation');
+                navigation.dispatch(state => {
+                    // Remove the Login route from the stack
+                    const routes = state.routes.filter(r => {
+                        r.params = {userID: googleLoginResult.user.id};
+                        return r.name !== 'Login';
+                    });
+                    
+                    return CommonActions.reset({
+                      ...state,
+                      routes,
+                      index: routes.length - 1,
+                    });
+                });
             } else {
                 console.log("Sign in with google failed. Please try again!")
             }
         } catch(error) {
             console.log(error);
         }
-        
     }
+
     return (
-        <SafeAreaView style={backgroundStyle.container}>
-            <View style={backgroundStyle.scrollView}>
-                <SocialIcon title='Sign in with Google' type='google'  button onPress={clickHandler} />
-            </View>
-        </SafeAreaView>
+        <Fragment>
+            <StatusBar style="light"></StatusBar>
+            <SafeAreaView style={{flex: 1, backgroundColor: backgroundBodyColor, display: "flex", justifyContent:"center", alignItems: "center", flexDirection: "column"}}>
+                <Image source={require('../../assets/NAGRIK.gif')} style={{height: 250, width: 250, marginBottom:20}}></Image>
+                <View style={{width: '60%', height: "35%"}}>
+                    <SocialIcon title='Sign in with Google' type='google'  button onPress={clickHandler} />
+                </View>
+            </SafeAreaView>
+        </Fragment>
     );
 }
 

@@ -2,11 +2,11 @@ import React from 'react';
 import { View, Image, StyleSheet, Text } from 'react-native';
 import { backgroundBodyColor, displayNameColor, displayNameSize, displayPhotoSize, headerBackgroundColor } from '../commons/cssVariables';
 
-export default function UserDisplay(){
+export default function UserDisplay(props){
     return (
         <View>
             <Image source={require('../../assets/user.png')} style={styles.displayPhoto}/>
-            <Text style={styles.displayName}>Dhruv Jain</Text>
+            <Text style={styles.displayName}>{props.name}</Text>
         </View>
     );
 }

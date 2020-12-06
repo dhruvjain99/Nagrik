@@ -1,16 +1,17 @@
+import { useLinkProps } from '@react-navigation/native';
 import React from 'react';
 import { StyleSheet, View, Text } from 'react-native';
 import { contactCountDisplayContainerColor, displayNameColor } from '../commons/cssVariables';
 
-export default function ContactCountDisplay(){
+export default function ContactCountDisplay(props){
     return (
         <View style={styles.container}> 
             <View>
-                <Text style={styles.mainText}>0 Communities</Text>
+                <Text style={styles.mainText}>{props.communities} Communities</Text>
                 <Text style={styles.subText}>places</Text>
             </View>
             <View>
-                <Text style={styles.mainText}>0 Contacts</Text>
+                <Text style={styles.mainText}>{props.friends} Contacts</Text>
                 <Text style={styles.subText}>friends</Text>
             </View>
         </View>
