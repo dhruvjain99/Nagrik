@@ -5,11 +5,11 @@ import ContactCountDisplay from './contactCountDisplay';
 import PostCountDisplay from './postCountDisplay';
 import Sectionbreak from '../commons/sectionbreak';
 
-export default function Profile(){
+export default function Profile(props){
     return (
         <View style={styles.Profile}> 
-            <UserDisplay/>
-            <ContactCountDisplay/>
+            <UserDisplay name={props.user.name}/>
+            <ContactCountDisplay communities={props.user.communities} friends={props.user.friends}/>
             <PostCountDisplay/>
             <Sectionbreak/>
         </View>
