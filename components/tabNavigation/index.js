@@ -5,13 +5,12 @@ import { Ionicons } from '@expo/vector-icons';
 import HomeScreen from '../homeScreen/index.js';
 import {displayNameColor, headerBackgroundColor} from '../commons/cssVariables';
 import UpperScreen from '../eventScreen/upperScreen.js';
-import { StatusBar } from 'expo-status-bar';
 import backgroundStyle from '../commons/backgroundStyle';
+import { useNavigation } from '@react-navigation/native';
 
 function Feed() {
   return (
     <React.Fragment>
-      <StatusBar style='light'></StatusBar>
       <SafeAreaView style={backgroundStyle.container}>
         <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }}>
           <Text style= {{ color: 'white'}}>Feed screen coming soon!</Text>
@@ -25,7 +24,6 @@ function Feed() {
 function Notifications() {
   return (
     <React.Fragment>
-      <StatusBar style='light'></StatusBar>
       <SafeAreaView style={backgroundStyle.container}>
         <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }}>
           <Text style= {{ color: 'white'}}>Notifications screen coming soon!</Text>
@@ -38,7 +36,6 @@ function Notifications() {
 function SettingsScreen() {
   return (
     <React.Fragment>
-      <StatusBar style='light'></StatusBar>
       <SafeAreaView style={backgroundStyle.container}>
         <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }}>
           <Text style= {{ color: 'white'}}>Settings screen coming soon!</Text>
@@ -52,6 +49,7 @@ function SettingsScreen() {
 const Tab = createBottomTabNavigator();
 
 export default function TabNavigation(props) {
+  const navigation = useNavigation();
   return (
       <Tab.Navigator
         screenOptions={({ navigation, route }) => ({
@@ -80,7 +78,7 @@ export default function TabNavigation(props) {
           inactiveBackgroundColor: headerBackgroundColor,
           style: {
             backgroundColor: 'black',
-            borderTopWidth: 0
+            borderTopWidth: 0,
           },
         }}
       >
