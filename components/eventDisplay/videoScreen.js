@@ -1,18 +1,16 @@
 import React from 'react';
-import { StyleSheet, Text, View, Dimensions } from 'react-native';
+import { View } from 'react-native';
 import { Video } from 'expo-av';
 import VideoPlayer from 'expo-video-player'
 
 export default class VideoScreen extends React.Component {
 	
-
-
   render() {
 	
     return (
       <View >
 				
-                <VideoPlayer
+      <VideoPlayer
       videoProps={{
         shouldPlay: true,
         resizeMode: Video.RESIZE_MODE_STRETCH,
@@ -21,7 +19,6 @@ export default class VideoScreen extends React.Component {
         },
       }}
       inFullscreen={false}
-      //height={220}
     />
 					
       </View>

@@ -1,6 +1,6 @@
 import React, {useRef, useState, useEffect} from 'react';
 import { StyleSheet, Dimensions, View } from 'react-native';
-import { displayNameColor, fontGreen } from '../commons/cssVariables';
+import { fontGreen } from '../commons/cssVariables';
 import MapView, {Marker, PROVIDER_GOOGLE} from 'react-native-maps';
 import { SearchBar } from 'react-native-elements';
 import Geocoder from 'react-native-geocoding';
@@ -39,7 +39,7 @@ export default function MapDisplay()
           "elementType": "labels.icon",
           "stylers": [
             {
-              "visibility": "off"
+              "visibility": "on"
             }
           ]
         },
@@ -67,7 +67,7 @@ export default function MapDisplay()
               "color": "#757575"
             },
             {
-              "visibility": "off"
+              "visibility": "on"
             }
           ]
         },
@@ -84,7 +84,7 @@ export default function MapDisplay()
           "featureType": "administrative.land_parcel",
           "stylers": [
             {
-              "visibility": "off"
+              "visibility": "on"
             }
           ]
         },
@@ -93,7 +93,7 @@ export default function MapDisplay()
           "elementType": "labels",
           "stylers": [
             {
-              "visibility": "off"
+              "visibility": "on"
             }
           ]
         },
@@ -110,7 +110,7 @@ export default function MapDisplay()
           "featureType": "poi",
           "stylers": [
             {
-              "visibility": "off"
+              "visibility": "on"
             }
           ]
         },
@@ -119,7 +119,7 @@ export default function MapDisplay()
           "elementType": "labels.text",
           "stylers": [
             {
-              "visibility": "off"
+              "visibility": "on"
             }
           ]
         },
@@ -173,7 +173,7 @@ export default function MapDisplay()
           "elementType": "labels.icon",
           "stylers": [
             {
-              "visibility": "off"
+              "visibility": "on"
             }
           ]
         },
@@ -190,7 +190,7 @@ export default function MapDisplay()
           "featureType": "road.arterial",
           "stylers": [
             {
-              "visibility": "off"
+              "visibility": "on"
             }
           ]
         },
@@ -217,7 +217,7 @@ export default function MapDisplay()
           "elementType": "labels",
           "stylers": [
             {
-              "visibility": "off"
+              "visibility": "on"
             }
           ]
         },
@@ -234,7 +234,7 @@ export default function MapDisplay()
           "featureType": "road.local",
           "stylers": [
             {
-              "visibility": "off"
+              "visibility": "on"
             }
           ]
         },
@@ -243,7 +243,7 @@ export default function MapDisplay()
           "elementType": "labels",
           "stylers": [
             {
-              "visibility": "off"
+              "visibility": "on"
             }
           ]
         },
@@ -260,7 +260,7 @@ export default function MapDisplay()
           "featureType": "transit",
           "stylers": [
             {
-              "visibility": "off"
+              "visibility": "on"
             }
           ]
         },
@@ -378,8 +378,9 @@ export default function MapDisplay()
             showsUserLocation = {true} 
             maxZoomLevel={50}>
                                 
-            {markers.map(marker => (
+            {markers.map((marker, markerID) => (
                 <Marker
+                key={markerID}
                 coordinate={{longitude: marker.longitude, latitude: marker.latitude}}
                 title={marker.title}
                 description={marker.description}

@@ -1,5 +1,5 @@
-import React, { Component, useState } from 'react';
-import { ScrollView, SafeAreaView, Dimensions, Alert, Button, TextInput, View, StyleSheet, Text } from 'react-native';
+import React, { useState } from 'react';
+import { Dimensions, TextInput, View, StyleSheet, Text } from 'react-native';
 import { CheckBox } from 'react-native-elements'
 import { useNavigation } from '@react-navigation/native';
 import { TouchableOpacity } from 'react-native-gesture-handler';
@@ -98,7 +98,7 @@ export default function UpperScreen(){
           </View>
         <TouchableOpacity onPress={onNext}>
           <View  style={styles.buttonContainer}>
-            <Text style={{color:'white', fontSize: '20'}}>Next</Text>
+            <Text style={{color:'white', fontSize: 20}}>Next</Text>
           </View>
         </TouchableOpacity>
       </View>
