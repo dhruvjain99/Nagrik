@@ -7,6 +7,7 @@ import Geocoder from 'react-native-geocoding';
 import { useNavigation } from '@react-navigation/native';
 import { Ionicons } from '@expo/vector-icons';
 import * as Location from 'expo-location';
+import * as SecureStore from 'expo-secure-store';
 
 Geocoder.init('AIzaSyDbKzhLTSxXJvkO83W4ar6aemJHVZmY9gM');
 
@@ -326,7 +327,25 @@ export default function MapDisplay()
         description: "xyz",
         title: "title"},                             
     ];
-
+    //API call to get incidents
+    async function plotIncidents(){
+      const token = await SecureStore.getItemAsync('token');
+      console.log(token);
+      const response = await fetch('https://nagrik-backend.herokuapp.com/userFeed/find?distance=1000', {
+        method: 'GET',
+        headers: {
+            'Accept': 'application/json',
+            'Content-Type': 'application/json',
+            'Authorization': 'Bearer ' + token,
+        },
+    });
+    let responseJson = await response.text();
+    console.log("json:-")
+    console.log(responseJson);
+  
+    }
+    
+    plotIncidents();
     useEffect(() => {
         (async () => {
           let { status } = await Location.requestPermissionsAsync();
@@ -360,8 +379,8 @@ export default function MapDisplay()
                         }, {duration: 500}
                     )
             }}
-            onRegionChange={(region)=>{setRegion(region);
-            }}
+            // onRegionChange={(region)=>{setRegion(region);
+            // }}
             
             initialCamera={
             {
@@ -420,7 +439,7 @@ export default function MapDisplay()
                 
                 />
 
-                <Ionicons name="ios-chatbubbles" size={30} color="white" onPress={() => alert("Message button is pressed.")}/>
+                <Ionicons name="ios-chatbubbles" size={30} color="white" onPress={() => navigation.navigate('Messages')}/>
              
             </View>           
             
