@@ -20,6 +20,7 @@ export default function IncidentDisplay(){
                 </TouchableOpacity> 
             <Picker
           style={styles.onePicker} itemStyle={styles.onePickerItem}
+
           selectedValue={distance}
           mode="dropdown"
           //on value change, also fetch number of incidents and users

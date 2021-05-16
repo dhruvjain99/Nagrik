@@ -311,7 +311,7 @@ export default function MapDisplay()
     let markers = [
         {latitude: 31.900965,
         longitude: 70.857277,
-        description: "description goes here dhkaxc ukhjncask qiudkjasn iqwudhax oqwhljckasn iuwqdjkaxn iquwkjbcsan",
+        description: "description goes here",
         title: "title"},
         {latitude: 30.900965,
         longitude: 72.857277,
