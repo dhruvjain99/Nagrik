@@ -33,7 +33,7 @@ export default function App() {
         <Stack.Screen name="MyPosts" options={{headerShown: false}} component={MyPostView} />
         <Stack.Screen name="Contact" options={{headerShown: false}} component={ContactView} />
         <Stack.Screen name="Chat" component={ChatScreen} />
-        {/* <Stack.Screen name="Messages" component={MessageScreen} /> */}
+        <Stack.Screen name="Messages" component={MessageScreen} />
       </Stack.Navigator>
     </NavigationContainer>
   );

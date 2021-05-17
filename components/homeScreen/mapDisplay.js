@@ -18,7 +18,6 @@ async function UpdateLocation(loc)
 {
     let location_json = await Geocoder.from(loc)
     let location = location_json.results[0].geometry.location;
-    console.log(location);
     return location; 
 }
 
@@ -294,44 +293,17 @@ export default function MapDisplay()
         }
       ];
     const [region, setRegion] = useState({
-        latitude: 30.900965,
-        longitude: 70.857277,
+        latitude: 70.900965,
+        longitude: 30.857277,
         latitudeDelta: 0.0922,
         longitudeDelta: 0.0421,
       });
     const [errorMsg, setErrorMsg] = useState(null);
-
-    //call API to fetch markers 
-  // axios.get('/incidents/find')
-  // .then(function (response) {
-  //   console.log(response);
-  // })
-  // .catch(function (error) {
-  //   console.log(error);
-  // });
-    let markers = [
-        {latitude: 31.900965,
-        longitude: 70.857277,
-        description: "description goes here",
-        title: "title"},
-        {latitude: 30.900965,
-        longitude: 72.857277,
-        description: "xyz",
-        title: "title"},
-        {latitude: 32.900965,
-        longitude: 70.857277,
-        description: "xyz",
-        title: "title"},
-        {latitude: 33.900965,
-        longitude: 71.857277,
-        description: "xyz",
-        title: "title"},                             
-    ];
-    //API call to get incidents
+    const [markers, setMarkers] = useState([]);
+    
     async function plotIncidents(){
       const token = await SecureStore.getItemAsync('token');
-      console.log(token);
-      const response = await fetch('https://nagrik-backend.herokuapp.com/userFeed/find?distance=1000', {
+      const response = await fetch('https://nagrik-backend.herokuapp.com/incidents/find', {
         method: 'GET',
         headers: {
             'Accept': 'application/json',
@@ -339,13 +311,28 @@ export default function MapDisplay()
             'Authorization': 'Bearer ' + token,
         },
     });
-    let responseJson = await response.text();
-    console.log("json:-")
-    console.log(responseJson);
-  
+    let responseJson = await response.json();
+    var i;
+    let markerInfo = [];
+
+    for(i=0;i<responseJson.length;i++)
+    {
+      var name = responseJson[i].name;
+      var desc = responseJson[i].description;
+      var lat = responseJson[i].location.coordinates[0];
+      var lon = responseJson[i].location.coordinates[1];
+
+      var obj = {latitude: lat, longitude: lon, description: desc, title: name}
+      markerInfo.push(obj);
+    }
+    setMarkers(markerInfo);  
     }
     
-    plotIncidents();
+    useEffect(()=>{
+      plotIncidents();
+    },[]);
+
+
     useEffect(() => {
         (async () => {
           let { status } = await Location.requestPermissionsAsync();
@@ -397,14 +384,18 @@ export default function MapDisplay()
             showsUserLocation = {true} 
             maxZoomLevel={50}>
                                 
-            {markers.map((marker, markerID) => (
+            {markers.length!=0 && markers.map((marker, markerID) => 
+              
+              (
                 <Marker
                 key={markerID}
+                pinColor={'#295221'}
                 coordinate={{longitude: marker.longitude, latitude: marker.latitude}}
                 title={marker.title}
                 description={marker.description}
                 onPress={() => navigation.navigate('Video')}
-                onSelect={() => navigation.navigate('Video')}>
+                
+                >
                 </Marker>
             ))}
              

@@ -21,7 +21,7 @@ const ChatScreen = () => {
       },
       {
         _id: 2,
-        text: 'Hello world',
+        text: 'Hello',
         createdAt: new Date(),
         user: {
           _id: 1,
