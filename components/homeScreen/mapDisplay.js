@@ -8,8 +8,9 @@ import { useNavigation } from '@react-navigation/native';
 import { Ionicons } from '@expo/vector-icons';
 import * as Location from 'expo-location';
 import * as SecureStore from 'expo-secure-store';
+import { GooglePlacesAutocomplete } from 'react-native-google-places-autocomplete';
 
-Geocoder.init('AIzaSyDbKzhLTSxXJvkO83W4ar6aemJHVZmY9gM');
+Geocoder.init('AIzaSyDqgQ71o5LZwOwR8lTmqWt25UjMD3CSkyY');
 
 const windowWidth = Dimensions.get('window').width;
 const windowHeight = Dimensions.get('window').height;
@@ -303,6 +304,7 @@ export default function MapDisplay()
     
     async function plotIncidents(){
       const token = await SecureStore.getItemAsync('token');
+      // console.log(token);
       const response = await fetch('https://nagrik-backend.herokuapp.com/incidents/find', {
         method: 'GET',
         headers: {
@@ -402,7 +404,7 @@ export default function MapDisplay()
             </MapView> 
             <View style={styles.container}>   
                 <Ionicons name="md-contact" size={35} color="white" onPress={() => navigation.navigate('Profile')}/>                   
-                <SearchBar
+                {/* <SearchBar
                 round
                 searchIcon={{ size: 20 }}
                 containerStyle={styles.containerSearch}
@@ -421,14 +423,92 @@ export default function MapDisplay()
                                     latitude: new_loc.lat,
                                     longitude: new_loc.lng,
                                 },
-                                zoom: 10,
+                                zoom: 15,
                                 
                             }, {duration: 500}
                         )
                     }           
                 }
                 
-                />
+                /> */}
+                <GooglePlacesAutocomplete
+                // style={GooglePlacesAutocompletestyle}
+          placeholder="Around you"
+          minLength={2} // minimum length of text to search
+          autoFocus={false}
+          returnKeyType={'search'} // Can be left out for default return key https://facebook.github.io/react-native/docs/textinput.html#returnkeytype
+          listViewDisplayed="auto" // true/false/undefined
+          fetchDetails={true}
+          // renderDescription={row => row.description} // custom description render
+          onPress={
+            async function(data, details = null) {
+            console.log(data.description);
+            var searchText = data.description;
+            var new_loc =   await UpdateLocation(searchText);
+                        console.log("5");
+                        setRegion(new_loc);              
+                        map.current.animateCamera(
+                            {
+                                center: {
+                                    latitude: new_loc.lat,
+                                    longitude: new_loc.lng,
+                                },
+                                zoom: 18,
+                                
+                            }, {duration: 500}
+                        )
+          }
+        }
+          getDefaultValue={() => {
+            return ''; // text input default value
+          }}
+          query={{
+            // available options: https://developers.google.com/places/web-service/autocomplete
+            key: 'AIzaSyDqgQ71o5LZwOwR8lTmqWt25UjMD3CSkyY',
+            language: 'en', // language of the results
+            // types: '(cities)', // default: 'geocode'
+          }}
+          styles={{
+            description: {
+              fontWeight: 'bold',
+            },
+            predefinedPlacesDescription: {
+              color: '#1faadb',
+            },
+            textInputContainer: {
+              width: '80%',
+              flexDirection: 'row',
+              alignSelf: 'center',
+      
+          },
+          textInput: {
+            
+            height: 40,
+            borderRadius: 40,
+            paddingVertical: 5,
+            paddingHorizontal: 10,
+            fontSize: 16,
+            flex: 1,
+          },
+          }}
+          // currentLocation={true} // Will add a 'Current location' button at the top of the predefined places list
+          // currentLocationLabel="Current location"
+          nearbyPlacesAPI="GooglePlacesSearch" // Which API to use: GoogleReverseGeocoding or GooglePlacesSearch
+          GoogleReverseGeocodingQuery={{
+            // available options for GoogleReverseGeocoding API : https://developers.google.com/maps/documentation/geocoding/intro
+          }}
+          GooglePlacesSearchQuery={{
+            // available options for GooglePlacesSearch API : https://developers.google.com/places/web-service/search
+            rankby: 'distance',
+            // types: 'food',
+          }}
+          // filterReverseGeocodingByTypes={[
+          //   'locality',
+          //   'administrative_area_level_3',
+          // ]} // filter the reverse geocoding results by types - ['locality', 'administrative_area_level_3'] if you want to display only cities
+          // predefinedPlaces={[homePlace, workPlace]}
+          debounce={200}
+        />
 
                 <Ionicons name="ios-chatbubbles" size={30} color="white" onPress={() => navigation.navigate('Messages')}/>
              
@@ -441,19 +521,7 @@ export default function MapDisplay()
 }
 const styles = StyleSheet.create(
     {
-        containerSearch: {
-            width: '65%',
-            height: 5,
-            display: 'flex',
-            flexDirection: 'row',
-            flexWrap: 'nowrap',
-            alignSelf: 'center',
-            alignItems: 'center',
-            backgroundColor:'transparent',
-            borderTopWidth: 0,
-            borderBottomWidth: 0,
-    
-        },
+      
     mapViewStyle: 
     {
         position: 'absolute',
