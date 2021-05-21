@@ -8,6 +8,8 @@ import ProfileScreen from './components/profileScreen/index.js';
 import TabNavigation from './components/tabNavigation/index.js'
 import LoginScreen from './components/LoginScreen'
 import CovidPostView from './components/eventDisplay/covidScreen'
+import ContactView from './components/profileScreen/contactUs'
+import MyPostView from './components/profileScreen/myPosts'
 
 const Stack = createStackNavigator();
 
@@ -20,12 +22,14 @@ export default function App() {
           shadowColor: headerShadowColor,
         }
         }}>
+        <Stack.Screen name="Profile" options={{headerShown: false}} component={ProfileScreen} />
+        <Stack.Screen name="Video" options={{headerShown: false}} component={Bottom} /> 
         <Stack.Screen name="Login" options={{headerShown: false}} component={LoginScreen} />
         <Stack.Screen name="CovidPostView" options={{title: 'COVID-19 Resources', headerShown: true, headerStyle: {backgroundColor: headerBackgroundColor}, headerTitleStyle: {color: '#FFFFFF', textAlign: 'center'} }} component={CovidPostView} />
         <Stack.Screen name="TabNavigation" options={{headerShown: false}} component={TabNavigation}/>
         <Stack.Screen name="LowerScreen" options={{headerShown: false}} component={LowerScreen} />
-        <Stack.Screen name="Profile" options={{headerShown: false}} component={ProfileScreen} />
-        <Stack.Screen name="Video" options={{headerShown: false}} component={Bottom} /> 
+        <Stack.Screen name="MyPosts" options={{headerShown: false}} component={MyPostView} />
+        <Stack.Screen name="Contact" options={{headerShown: false}} component={ContactView} />
       </Stack.Navigator>
     </NavigationContainer>
   );
