@@ -1,15 +1,7 @@
 import React, { Component } from 'react';
-import {
-  StyleSheet,
-  Text,
-  View,
-  Image,
-  TouchableOpacity,
-  ScrollView, SafeAreaView
-} from 'react-native';
-import { backgroundBodyColor, displayNameColor, displayNameSize, displayPhotoSize, headerBackgroundColor } from '../commons/cssVariables';
+import {StyleSheet, Text, View, Image, TouchableOpacity, ScrollView, SafeAreaView} from 'react-native';
 import backgroundStyle from '../commons/backgroundStyle';
-import { Ionicons } from '@expo/vector-icons';
+import {Ionicons} from '@expo/vector-icons';
 
 export default class PostView extends Component {
 
@@ -125,7 +117,6 @@ const styles = StyleSheet.create({
     margin: 10,
   },
   date:{
-    //color: '#52555b',
     color: '#c4c4c4',
     marginTop:10,
     textAlign: 'right'
@@ -165,5 +156,4 @@ const styles = StyleSheet.create({
     color: "#FFFFFF",
     fontSize:18,
   }
-});
- 
+}); 

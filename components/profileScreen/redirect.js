@@ -9,15 +9,8 @@ export default function Redirect(){
         <View style={styles.container}>
             <View style={styles.link}>
                 <View style={styles.labelContainer}>
-                    <Ionicons name="ios-person-add" size={30} color={fontGreen}/>
-                    <Text style={styles.label}>add friends</Text>
-                </View>
-                <Ionicons name="ios-arrow-forward" size={30} color={displayNameColor}/>
-            </View>
-            <View style={styles.link}>
-                <View style={styles.labelContainer}>
-                    <Ionicons name="ios-settings" size={30} color={fontGreen}/>
-                    <Text style={styles.label}>app settings</Text>
+                    <Ionicons name="md-image" size={30} color={fontGreen}/>
+                    <Text style={styles.label}>My posts</Text>
                 </View>
                 <Ionicons name="ios-arrow-forward" size={30} color={displayNameColor}/>
             </View>

@@ -8,7 +8,7 @@ export default class VideoScreen extends React.Component {
   render() {
 	
     return (
-      <View style={{height: 150}}>				
+      <View>				
       <VideoPlayer
       videoProps={{
         shouldPlay: true,
