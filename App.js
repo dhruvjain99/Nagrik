@@ -10,6 +10,8 @@ import LoginScreen from './components/LoginScreen'
 import CovidPostView from './components/eventDisplay/covidScreen'
 import ContactView from './components/profileScreen/contactUs'
 import MyPostView from './components/profileScreen/myPosts'
+import MessageScreen from './components/chatScreen/messageScreen'
+import ChatScreen from './components/chatScreen/chatScreen'
 
 const Stack = createStackNavigator();
 
@@ -30,6 +32,8 @@ export default function App() {
         <Stack.Screen name="LowerScreen" options={{headerShown: false}} component={LowerScreen} />
         <Stack.Screen name="MyPosts" options={{headerShown: false}} component={MyPostView} />
         <Stack.Screen name="Contact" options={{headerShown: false}} component={ContactView} />
+        <Stack.Screen name="Chat" component={ChatScreen} />
+        <Stack.Screen name="Messages" component={MessageScreen} />
       </Stack.Navigator>
     </NavigationContainer>
   );

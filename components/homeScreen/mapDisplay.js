@@ -7,8 +7,10 @@ import Geocoder from 'react-native-geocoding';
 import { useNavigation } from '@react-navigation/native';
 import { Ionicons } from '@expo/vector-icons';
 import * as Location from 'expo-location';
+import * as SecureStore from 'expo-secure-store';
+import { GooglePlacesAutocomplete } from 'react-native-google-places-autocomplete';
 
-Geocoder.init('AIzaSyDbKzhLTSxXJvkO83W4ar6aemJHVZmY9gM');
+Geocoder.init('AIzaSyDqgQ71o5LZwOwR8lTmqWt25UjMD3CSkyY');
 
 const windowWidth = Dimensions.get('window').width;
 const windowHeight = Dimensions.get('window').height;
@@ -17,7 +19,6 @@ async function UpdateLocation(loc)
 {
     let location_json = await Geocoder.from(loc)
     let location = location_json.results[0].geometry.location;
-    console.log(location);
     return location; 
 }
 
@@ -293,39 +294,46 @@ export default function MapDisplay()
         }
       ];
     const [region, setRegion] = useState({
-        latitude: 30.900965,
-        longitude: 70.857277,
+        latitude: 70.900965,
+        longitude: 30.857277,
         latitudeDelta: 0.0922,
         longitudeDelta: 0.0421,
       });
     const [errorMsg, setErrorMsg] = useState(null);
+    const [markers, setMarkers] = useState([]);
+    
+    async function plotIncidents(){
+      const token = await SecureStore.getItemAsync('token');
+      // console.log(token);
+      const response = await fetch('https://nagrik-backend.herokuapp.com/incidents/find', {
+        method: 'GET',
+        headers: {
+            'Accept': 'application/json',
+            'Content-Type': 'application/json',
+            'Authorization': 'Bearer ' + token,
+        },
+    });
+    let responseJson = await response.json();
+    var i;
+    let markerInfo = [];
 
-    //call API to fetch markers 
-  // axios.get('/incidents/find')
-  // .then(function (response) {
-  //   console.log(response);
-  // })
-  // .catch(function (error) {
-  //   console.log(error);
-  // });
-    let markers = [
-        {latitude: 31.900965,
-        longitude: 70.857277,
-        description: "description goes here",
-        title: "title"},
-        {latitude: 30.900965,
-        longitude: 72.857277,
-        description: "xyz",
-        title: "title"},
-        {latitude: 32.900965,
-        longitude: 70.857277,
-        description: "xyz",
-        title: "title"},
-        {latitude: 33.900965,
-        longitude: 71.857277,
-        description: "xyz",
-        title: "title"},                             
-    ];
+    for(i=0;i<responseJson.length;i++)
+    {
+      var name = responseJson[i].name;
+      var desc = responseJson[i].description;
+      var lat = responseJson[i].location.coordinates[0];
+      var lon = responseJson[i].location.coordinates[1];
+
+      var obj = {latitude: lat, longitude: lon, description: desc, title: name}
+      markerInfo.push(obj);
+    }
+    setMarkers(markerInfo);  
+    }
+    
+    useEffect(()=>{
+      plotIncidents();
+    },[]);
+
 
     useEffect(() => {
         (async () => {
@@ -360,8 +368,8 @@ export default function MapDisplay()
                         }, {duration: 500}
                     )
             }}
-            onRegionChange={(region)=>{setRegion(region);
-            }}
+            // onRegionChange={(region)=>{setRegion(region);
+            // }}
             
             initialCamera={
             {
@@ -378,21 +386,25 @@ export default function MapDisplay()
             showsUserLocation = {true} 
             maxZoomLevel={50}>
                                 
-            {markers.map((marker, markerID) => (
+            {markers.length!=0 && markers.map((marker, markerID) => 
+              
+              (
                 <Marker
                 key={markerID}
+                pinColor={'#295221'}
                 coordinate={{longitude: marker.longitude, latitude: marker.latitude}}
                 title={marker.title}
                 description={marker.description}
                 onPress={() => navigation.navigate('Video')}
-                onSelect={() => navigation.navigate('Video')}>
+                
+                >
                 </Marker>
             ))}
              
             </MapView> 
             <View style={styles.container}>   
                 <Ionicons name="md-contact" size={35} color="white" onPress={() => navigation.navigate('Profile')}/>                   
-                <SearchBar
+                {/* <SearchBar
                 round
                 searchIcon={{ size: 20 }}
                 containerStyle={styles.containerSearch}
@@ -411,16 +423,94 @@ export default function MapDisplay()
                                     latitude: new_loc.lat,
                                     longitude: new_loc.lng,
                                 },
-                                zoom: 10,
+                                zoom: 15,
                                 
                             }, {duration: 500}
                         )
                     }           
                 }
                 
-                />
+                /> */}
+                <GooglePlacesAutocomplete
+                // style={GooglePlacesAutocompletestyle}
+          placeholder="Around you"
+          minLength={2} // minimum length of text to search
+          autoFocus={false}
+          returnKeyType={'search'} // Can be left out for default return key https://facebook.github.io/react-native/docs/textinput.html#returnkeytype
+          listViewDisplayed="auto" // true/false/undefined
+          fetchDetails={true}
+          // renderDescription={row => row.description} // custom description render
+          onPress={
+            async function(data, details = null) {
+            console.log(data.description);
+            var searchText = data.description;
+            var new_loc =   await UpdateLocation(searchText);
+                        console.log("5");
+                        setRegion(new_loc);              
+                        map.current.animateCamera(
+                            {
+                                center: {
+                                    latitude: new_loc.lat,
+                                    longitude: new_loc.lng,
+                                },
+                                zoom: 18,
+                                
+                            }, {duration: 500}
+                        )
+          }
+        }
+          getDefaultValue={() => {
+            return ''; // text input default value
+          }}
+          query={{
+            // available options: https://developers.google.com/places/web-service/autocomplete
+            key: 'AIzaSyDqgQ71o5LZwOwR8lTmqWt25UjMD3CSkyY',
+            language: 'en', // language of the results
+            // types: '(cities)', // default: 'geocode'
+          }}
+          styles={{
+            description: {
+              fontWeight: 'bold',
+            },
+            predefinedPlacesDescription: {
+              color: '#1faadb',
+            },
+            textInputContainer: {
+              width: '80%',
+              flexDirection: 'row',
+              alignSelf: 'center',
+      
+          },
+          textInput: {
+            
+            height: 40,
+            borderRadius: 40,
+            paddingVertical: 5,
+            paddingHorizontal: 10,
+            fontSize: 16,
+            flex: 1,
+          },
+          }}
+          // currentLocation={true} // Will add a 'Current location' button at the top of the predefined places list
+          // currentLocationLabel="Current location"
+          nearbyPlacesAPI="GooglePlacesSearch" // Which API to use: GoogleReverseGeocoding or GooglePlacesSearch
+          GoogleReverseGeocodingQuery={{
+            // available options for GoogleReverseGeocoding API : https://developers.google.com/maps/documentation/geocoding/intro
+          }}
+          GooglePlacesSearchQuery={{
+            // available options for GooglePlacesSearch API : https://developers.google.com/places/web-service/search
+            rankby: 'distance',
+            // types: 'food',
+          }}
+          // filterReverseGeocodingByTypes={[
+          //   'locality',
+          //   'administrative_area_level_3',
+          // ]} // filter the reverse geocoding results by types - ['locality', 'administrative_area_level_3'] if you want to display only cities
+          // predefinedPlaces={[homePlace, workPlace]}
+          debounce={200}
+        />
 
-                <Ionicons name="ios-chatbubbles" size={30} color="white" onPress={() => alert("Message button is pressed.")}/>
+                <Ionicons name="ios-chatbubbles" size={30} color="white" onPress={() => navigation.navigate('Messages')}/>
              
             </View>           
             
@@ -431,19 +521,7 @@ export default function MapDisplay()
 }
 const styles = StyleSheet.create(
     {
-        containerSearch: {
-            width: '65%',
-            height: 5,
-            display: 'flex',
-            flexDirection: 'row',
-            flexWrap: 'nowrap',
-            alignSelf: 'center',
-            alignItems: 'center',
-            backgroundColor:'transparent',
-            borderTopWidth: 0,
-            borderBottomWidth: 0,
-    
-        },
+      
     mapViewStyle: 
     {
         position: 'absolute',
