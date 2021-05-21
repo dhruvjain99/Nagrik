@@ -110,7 +110,7 @@ const styles = StyleSheet.create({
     value: {
         color: '#56ad40',
         fontWeight: 'bold',
-        fontSize: 25,
+        fontSize: 30,
         textAlign: "center"
     },
     label: {
@@ -122,10 +122,11 @@ const styles = StyleSheet.create({
         textTransform: "uppercase"
     },
     onePicker: {
-      width: 150,
-      height: 40,
-      backgroundColor: 'rgba(0,0,0,0.1)',
+      width: 100,
+      height: 30,
+      backgroundColor: 'rgba(0,0,0,0.6)',
       borderWidth: 0,
+      color: 'white',
     },
     onePickerItem: {
       fontSize: 15,
