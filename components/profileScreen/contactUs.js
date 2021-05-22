@@ -93,14 +93,14 @@ const styles = StyleSheet.create({
     marginLeft:15,
     justifyContent: 'center'
   },
-  buttonContainer: {
-    height:45,
-    flexDirection: 'row',
+    buttonContainer: {
+    alignSelf: 'center',
     justifyContent: 'center',
+    width: '40%',
+    height: 40,
+    borderRadius: 10,   
+    backgroundColor: '#459135',
     alignItems: 'center',
-    margin:20,
-    width:100,
-    borderRadius:30,
   },
   sendButton: {
     backgroundColor: "#262626",

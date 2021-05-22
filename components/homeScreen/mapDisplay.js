@@ -1,8 +1,7 @@
 import React, {useRef, useState, useEffect} from 'react';
-import { StyleSheet, Dimensions, View } from 'react-native';
+import { StyleSheet, Dimensions, View, Text, TouchableOpacity } from 'react-native';
 import { fontGreen } from '../commons/cssVariables';
 import MapView, {Marker, PROVIDER_GOOGLE} from 'react-native-maps';
-import { SearchBar } from 'react-native-elements';
 import Geocoder from 'react-native-geocoding';
 import { useNavigation } from '@react-navigation/native';
 import { Ionicons } from '@expo/vector-icons';
@@ -10,7 +9,7 @@ import * as Location from 'expo-location';
 import * as SecureStore from 'expo-secure-store';
 import { GooglePlacesAutocomplete } from 'react-native-google-places-autocomplete';
 
-Geocoder.init('AIzaSyDqgQ71o5LZwOwR8lTmqWt25UjMD3CSkyY');
+Geocoder.init('AIzaSyDA_JtMZ9iIIAwYGJqWuKGsmILsn5Mn0YA');
 
 const windowWidth = Dimensions.get('window').width;
 const windowHeight = Dimensions.get('window').height;
@@ -294,8 +293,8 @@ export default function MapDisplay()
         }
       ];
     const [region, setRegion] = useState({
-        latitude: 70.900965,
-        longitude: 30.857277,
+        latitude: 30.733315,
+        longitude: 76.779419,
         latitudeDelta: 0.0922,
         longitudeDelta: 0.0421,
       });
@@ -342,12 +341,14 @@ export default function MapDisplay()
             setErrorMsg('Permission to access location was denied');
           }
     
-          let location = await Location.getCurrentPositionAsync({});
-          setRegion({latitude: location.coords.latitude,
-            longitude: location.coords.longitude,
-            latitudeDelta: 0.0922,
-        longitudeDelta: 0.0421,});
-        })();
+          let location = await Location.getCurrentPositionAsync({}); 
+          map.current.animateCamera({
+            center: {
+                latitude: location.coords.latitude,
+                longitude: location.coords.longitude,
+            },
+            zoom: 15,
+          }, {duration: 500})})();
       }, []);
 
     return(        
@@ -356,7 +357,9 @@ export default function MapDisplay()
             ref = {map}
             provider={PROVIDER_GOOGLE}
             style={styles.mapViewStyle}
-            customMapStyle={g}  
+            customMapStyle={g}
+            showsMyLocationButton={false}
+            showsCompass={false}
             onMapReady={()=>{
                 map.current.animateCamera(
                         {
@@ -395,7 +398,7 @@ export default function MapDisplay()
                 coordinate={{longitude: marker.longitude, latitude: marker.latitude}}
                 title={marker.title}
                 description={marker.description}
-                onPress={() => navigation.navigate('Video')}
+                onPress={() => navigation.navigate('CovidPostView')}
                 
                 >
                 </Marker>
@@ -404,33 +407,6 @@ export default function MapDisplay()
             </MapView> 
             <View style={styles.container}>   
                 <Ionicons name="md-contact" size={35} color="white" onPress={() => navigation.navigate('Profile')}/>                   
-                {/* <SearchBar
-                round
-                searchIcon={{ size: 20 }}
-                containerStyle={styles.containerSearch}
-                onChangeText={(searchText)=>{setSeachText(searchText)}}
-                placeholder="Around you"
-                value={searchText}
-                onSubmitEditing={
-                    async function() 
-                    {   console.log("1");
-                        var new_loc =   await UpdateLocation(searchText);
-                        console.log("5");
-                        setRegion(new_loc);              
-                        map.current.animateCamera(
-                            {
-                                center: {
-                                    latitude: new_loc.lat,
-                                    longitude: new_loc.lng,
-                                },
-                                zoom: 15,
-                                
-                            }, {duration: 500}
-                        )
-                    }           
-                }
-                
-                /> */}
                 <GooglePlacesAutocomplete
                 // style={GooglePlacesAutocompletestyle}
           placeholder="Around you"
@@ -453,7 +429,7 @@ export default function MapDisplay()
                                     latitude: new_loc.lat,
                                     longitude: new_loc.lng,
                                 },
-                                zoom: 18,
+                                zoom: 15.5,
                                 
                             }, {duration: 500}
                         )
@@ -464,7 +440,7 @@ export default function MapDisplay()
           }}
           query={{
             // available options: https://developers.google.com/places/web-service/autocomplete
-            key: 'AIzaSyDqgQ71o5LZwOwR8lTmqWt25UjMD3CSkyY',
+            key: 'AIzaSyDA_JtMZ9iIIAwYGJqWuKGsmILsn5Mn0YA',
             language: 'en', // language of the results
             // types: '(cities)', // default: 'geocode'
           }}
@@ -478,18 +454,27 @@ export default function MapDisplay()
             textInputContainer: {
               width: '80%',
               flexDirection: 'row',
-              alignSelf: 'center',
-      
-          },
-          textInput: {
-            
-            height: 40,
-            borderRadius: 40,
-            paddingVertical: 5,
-            paddingHorizontal: 10,
-            fontSize: 16,
-            flex: 1,
-          },
+              alignSelf: 'center'
+            },
+            textInput: {
+              height: 40,
+              borderRadius: 40,
+              paddingVertical: 5,
+              paddingHorizontal: 20,
+              fontSize: 16,
+              flex: 1,
+            },
+            listView: {
+              width: '80%',
+              overflow: 'hidden'
+            },
+            poweredContainer: {
+              display: 'none',
+            },
+            container: {
+              display: 'flex',
+              alignItems: 'center'
+            }
           }}
           // currentLocation={true} // Will add a 'Current location' button at the top of the predefined places list
           // currentLocationLabel="Current location"
@@ -510,10 +495,21 @@ export default function MapDisplay()
           debounce={200}
         />
 
-                <Ionicons name="ios-chatbubbles" size={30} color="white" onPress={() => navigation.navigate('Messages')}/>
+                <Ionicons name="ios-chatbubbles" size={30} style={{marginTop: 3}} color="white" onPress={() => navigation.navigate('Messages')}/>
              
-            </View>           
-            
+            </View>
+                <TouchableOpacity style={styles.gotoMyLocationButton} onPress={async () => {let location = await Location.getCurrentPositionAsync({}); map.current.animateCamera(
+                            {
+                                center: {
+                                    latitude: location.coords.latitude,
+                                    longitude: location.coords.longitude,
+                                },
+                                zoom: 15,
+                                
+                            }, {duration: 500}
+                        )}}>
+                <Ionicons name="md-locate" size={30} color="rgba(60, 60, 60, 1)" />
+              </TouchableOpacity>
             
         </View>
         
@@ -538,11 +534,12 @@ const styles = StyleSheet.create(
         container: {
             width: '100%',
             top: 10,
-            padding: 10,
+            paddingVertical: 10,
             display: 'flex',
             flexDirection: 'row',
             flexWrap: 'nowrap',
             justifyContent: 'space-around',
+            paddingHorizontal: 20
     
         },
         
@@ -551,6 +548,18 @@ const styles = StyleSheet.create(
             fontWeight: 'bold',
             fontSize: 17,
             textAlign: "center"
+        },
+        gotoMyLocationButton: {
+          backgroundColor: 'rgba(200, 200, 200, 0.6)',
+          borderRadius: 9,
+          paddingVertical: 6,
+          paddingHorizontal: 8,
+          display: 'flex',
+          position: 'absolute',
+          top: 500,
+          right: 10,
+          flexDirection: 'row',
+          justifyContent: 'center',
         },
     }
 );

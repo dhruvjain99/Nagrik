@@ -8,61 +8,56 @@ export default class PostView extends Component {
   render() {
     return (
       <SafeAreaView style={backgroundStyle.container}>
-            <ScrollView style={backgroundStyle.scrollView} indicatorStyle="white">
-            <View style={styles.container}>
+        <View style={styles.container}>
+          <View style={styles.postContent}>
+            <Text style={styles.postTitle}>
+              Oxygen Bed Required Urgently!
+            </Text>
+            <View style={styles.row}>
+              <View style= {{flex:1, flexDirection: 'row', alignItems: 'center'}}>
+                <Ionicons name={'md-locate'} size={18} color='#c4c4c4' style={{marginTop: 10, marginRight: 8}} />
+                <Text style={styles.date}>
+                  Chandigarh
+                </Text>      
+              </View>
+              <Text style={styles.date}>
+                17 hrs ago
+              </Text>
+            </View>
+          <View style={styles.row}>
+            <Text style={styles.tagBorder}>
+              Need 
+            </Text>
+            <Text style={styles.tagBorder}>
+              Hospital Beds
+            </Text>
+            <Text style={styles.tagBorder}>
+              Oxygen Beds
+            </Text>
+          </View>
 
-    <View style={styles.postContent}>
-    <Text style={styles.postTitle}>
-      Oxygen Bed Required Urgently!
-    </Text>
-    
-    <View style={styles.row}>
-    <View style= {{flex:1, flexDirection: 'row', alignItems: 'center'}}>
-      <Ionicons name={'md-locate'} size={18} color='#c4c4c4' style={{marginTop: 10, marginRight: 8}} />
-      <Text style={styles.date}>
-        Chandigarh
-      </Text>      
-    </View>
-      <Text style={styles.date}>
-        17 hrs ago
-      </Text>
-    </View>
+          <Text style={styles.postDescription}>
+            My brother-in-law is suffering from COVID-19 and his health is very critical. He requires an oxygen bed urgently. He is a resident of Chandigarh.
+          </Text>
 
-    <View style={styles.row}>
-    <Text style={styles.tagBorder}>
-      Need 
-    </Text>
-    <Text style={styles.tagBorder}>
-      Hospital Beds
-    </Text>
-    <Text style={styles.tagBorder}>
-      Oxygen Beds
-    </Text>
-    </View>
+          <View style={styles.profile}>
+            <Image source={require('../../assets/user.png')} style={styles.avatar}/>
+            <Text style={styles.name}>Abhishek Dhiman</Text>
+          </View>
 
-    <Text style={styles.postDescription}>
-      My brother-in-law is suffering from COVID-19 and his health is very critical. He requires an oxygen bed urgently. He is a resident of Chandigarh.
-    </Text>
-
-    <View style={styles.profile}>
-      <Image source={require('../../assets/user.png')} style={styles.avatar}/>
-      <Text style={styles.name}>Abhishek Dhiman</Text>
-    </View>
-
-    <View style={styles.row}>
-      <TouchableOpacity style={styles.shareButton}>
-        <Ionicons name={'ios-text'} size={22} color='#FFFFFF'/>
-        <Text style={styles.shareButtonText}>Message</Text>  
-      </TouchableOpacity> 
-      <TouchableOpacity style={styles.shareButton}>
-        <Ionicons name={'md-navigate'} size={22} color='#FFFFFF'/>
-        <Text style={styles.shareButtonText}>Directions</Text>  
-      </TouchableOpacity> 
-    </View>
-</View>
-</View>
-            </ScrollView>
-        </SafeAreaView>
+          <View style={styles.row}>
+            <TouchableOpacity style={styles.shareButton}>
+              <Ionicons name={'ios-text'} size={22} color='#FFFFFF'/>
+              <Text style={styles.shareButtonText}>Message</Text>  
+            </TouchableOpacity> 
+            <TouchableOpacity style={styles.shareButton}>
+              <Ionicons name={'md-navigate'} size={22} color='#FFFFFF'/>
+              <Text style={styles.shareButtonText}>Directions</Text>  
+            </TouchableOpacity> 
+          </View>
+        </View>
+        </View>
+      </SafeAreaView>
 
     );
   }

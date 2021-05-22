@@ -1,5 +1,5 @@
-import React, { Fragment } from 'react';
-import { View, SafeAreaView, Image }from 'react-native';
+import React, { Fragment, useState } from 'react';
+import { View, SafeAreaView, Image, StyleSheet, ActivityIndicator, Text }from 'react-native';
 import { SocialIcon } from 'react-native-elements'
 import * as Google from 'expo-google-app-auth';
 import * as SecureStore from 'expo-secure-store';
@@ -8,9 +8,11 @@ import { backgroundBodyColor } from '../commons/cssVariables';
 import { StatusBar } from 'expo-status-bar';
 
 export default function LoginScreen(){
+    let [loginInProgress, setLoginInProgress] = useState(false);
     const navigation = useNavigation();
     async function clickHandler() { 
         try {
+            setLoginInProgress(true);
             let config = {
                 androidClientId: '292178739884-hkk7m98strihhm0340eu991krpgl48q5.apps.googleusercontent.com',
                 iosClientId: '292178739884-sii8s0kt2pvln721o06u4fgctgnqk2tn.apps.googleusercontent.com'
@@ -48,6 +50,7 @@ export default function LoginScreen(){
                 });
             } else {
                 console.log("Sign in with google failed. Please try again!")
+                setLoginInProgress(false);
             }
         } catch(error) {
             console.log(error);
@@ -57,13 +60,34 @@ export default function LoginScreen(){
     return (
         <Fragment>
             <StatusBar style="light"></StatusBar>
-            <SafeAreaView style={{flex: 1, backgroundColor: backgroundBodyColor, display: "flex", justifyContent:"center", alignItems: "center", flexDirection: "column"}}>
+            <SafeAreaView style={{flex: 1, backgroundColor: backgroundBodyColor, display: "flex", justifyContent:"space-around", alignItems: "center", flexDirection: "column", paddingVertical: 150}}>
                 <Image source={require('../../assets/NAGRIK.gif')} style={{height: 250, width: 250, marginBottom:20}}></Image>
                 <View style={{width: '60%', height: "35%"}}>
                     <SocialIcon title='Sign in with Google' type='google'  button onPress={clickHandler} />
                 </View>
             </SafeAreaView>
+            {
+                    loginInProgress && 
+                    <View style={styles.loading}>
+                        <ActivityIndicator size='large' color="#fff" />
+                        <Text style={{marginTop: 20, color: '#fff'}}>Signing you in ...</Text>
+                    </View>
+                }
         </Fragment>
     );
 }
 
+const styles = StyleSheet.create({
+    loading: {
+        position: 'absolute',
+        left: 0,
+        right: 0,
+        top: 0,
+        bottom: 0,
+        alignItems: 'center',
+        justifyContent: 'center',
+        flexDirection: 'column',
+        backgroundColor: '#75757561',
+        color: '#fff'
+    }
+})

@@ -79,9 +79,6 @@ const MessageScreen = ({navigation}) => {
     return (
       <Fragment>
       <SafeAreaView style={backgroundStyle.container}>
-      <View style={styles.container}>
-          <Text style={styles.heading}> Messages </Text>
-        </View>
           <FlatList 
             data={Messages}
             keyExtractor={item=>item.id}

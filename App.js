@@ -24,16 +24,16 @@ export default function App() {
           shadowColor: headerShadowColor,
         }
         }}>
-        <Stack.Screen name="Profile" options={{headerShown: false}} component={ProfileScreen} />
-        <Stack.Screen name="Video" options={{headerShown: false}} component={Bottom} /> 
         <Stack.Screen name="Login" options={{headerShown: false}} component={LoginScreen} />
-        <Stack.Screen name="CovidPostView" options={{title: 'COVID-19 Resources', headerShown: true, headerStyle: {backgroundColor: headerBackgroundColor}, headerTitleStyle: {color: '#FFFFFF', textAlign: 'center'} }} component={CovidPostView} />
         <Stack.Screen name="TabNavigation" options={{headerShown: false}} component={TabNavigation}/>
+        <Stack.Screen name="Profile" options={{headerShown: true, title: 'My Profile', headerTintColor: '#fff', headerStyle: {backgroundColor: headerBackgroundColor}, headerTitleStyle: {color: '#fff'}}} component={ProfileScreen} />
+        <Stack.Screen name="Video" options={{headerShown: false}} component={Bottom} /> 
+        <Stack.Screen name="CovidPostView" options={{headerShown: true, title: 'COVID-19 Resources', headerTintColor: '#fff', headerStyle: {backgroundColor: headerBackgroundColor}, headerTitleStyle: {color: '#fff'}}} component={CovidPostView} />
         <Stack.Screen name="LowerScreen" options={{headerShown: false}} component={LowerScreen} />
-        <Stack.Screen name="MyPosts" options={{headerShown: false}} component={MyPostView} />
-        <Stack.Screen name="Contact" options={{headerShown: false}} component={ContactView} />
-        <Stack.Screen name="Chat" component={ChatScreen} />
-        <Stack.Screen name="Messages" component={MessageScreen} />
+        <Stack.Screen name="MyPosts" options={{headerShown: true, title: 'My Posts', headerTintColor: '#fff', headerStyle: {backgroundColor: headerBackgroundColor}, headerTitleStyle: {color: '#fff'}}} component={MyPostView} />
+        <Stack.Screen name="Contact" options={{headerShown: true, title: 'Contact Us', headerTintColor: '#fff', headerStyle: {backgroundColor: headerBackgroundColor}, headerTitleStyle: {color: '#fff'}}} component={ContactView} />
+        <Stack.Screen name="Chat" options={{headerShown: true, title: 'Chat', headerTintColor: '#fff', headerStyle: {backgroundColor: headerBackgroundColor}, headerTitleStyle: {color: '#fff'}}} component={ChatScreen} />
+        <Stack.Screen name="Messages" options={{headerShown: true, title: 'All Messages', headerTintColor: '#fff', headerStyle: {backgroundColor: headerBackgroundColor}, headerTitleStyle: {color: '#fff'}}} component={MessageScreen} />
       </Stack.Navigator>
     </NavigationContainer>
   );
