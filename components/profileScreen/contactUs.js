@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import {StyleSheet, Text, View, TextInput, Button, TouchableHighlight, Image, Alert} from 'react-native';
+import {StyleSheet, Text, View, TextInput, Button, TouchableHighlight, Image, Alert, TouchableOpacity} from 'react-native';
 
 export default class ContactView extends Component {
 
@@ -39,8 +39,8 @@ export default class ContactView extends Component {
               onChangeText={(password) => this.setState({password})}/>
         </View>
 
-        <TouchableHighlight style={[styles.buttonContainer, styles.sendButton]} onPress={() => this.onClickListener('login')}>
-          <Text style={styles.buttonText}>Send</Text>
+        <TouchableHighlight style={[styles.buttonContainer]} onPress={() => this.onClickListener('login')}>
+          <Text style={{color:'white', fontSize: 20}}>Send</Text>
         </TouchableHighlight>
       </View>
     );
@@ -66,10 +66,10 @@ const styles = StyleSheet.create({
       alignItems:'center'
   },
   logo:{
-    width:120,
-    height:120,
+    width:200,
+    height:200,
     justifyContent: 'center',
-    marginBottom:20,
+    marginBottom: 10
   },
   inputContainer: {
       padding: 5,
@@ -94,16 +94,14 @@ const styles = StyleSheet.create({
     justifyContent: 'center'
   },
     buttonContainer: {
+    backgroundColor: '#459135',
     alignSelf: 'center',
     justifyContent: 'center',
     width: '40%',
     height: 40,
     borderRadius: 10,   
-    backgroundColor: '#459135',
     alignItems: 'center',
-  },
-  sendButton: {
-    backgroundColor: "#262626",
+    marginTop: 20
   },
   buttonText: {
     color: 'white',

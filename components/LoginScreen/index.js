@@ -61,7 +61,7 @@ export default function LoginScreen(){
         <Fragment>
             <StatusBar style="light"></StatusBar>
             <SafeAreaView style={{flex: 1, backgroundColor: backgroundBodyColor, display: "flex", justifyContent:"space-around", alignItems: "center", flexDirection: "column", paddingVertical: 150}}>
-                <Image source={require('../../assets/NAGRIK.gif')} style={{height: 250, width: 250, marginBottom:20}}></Image>
+                <Image source={require('../../assets/NAGRIK.gif')} style={{height: 200, width: 200, marginBottom:20}}></Image>
                 <View style={{width: '60%', height: "35%"}}>
                     <SocialIcon title='Sign in with Google' type='google'  button onPress={clickHandler} />
                 </View>
