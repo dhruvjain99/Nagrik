@@ -122,11 +122,14 @@ const styles = StyleSheet.create({
         textTransform: "uppercase"
     },
     onePicker: {
-      width: 100,
+      width: 130,
       height: 30,
       backgroundColor: 'rgba(0,0,0,0.6)',
       borderWidth: 0,
       color: 'white',
+      display: 'flex',
+      flexDirection: 'row',
+      justifyContent: 'center'
     },
     onePickerItem: {
       fontSize: 15,

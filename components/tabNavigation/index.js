@@ -7,7 +7,6 @@ import {displayNameColor, headerBackgroundColor} from '../commons/cssVariables';
 import UpperScreen from '../eventScreen/upperScreen.js';
 import backgroundStyle from '../commons/backgroundStyle';
 import { useNavigation } from '@react-navigation/native';
-import CovidPostView from '../eventDisplay/covidScreen'
 
 function Feed() {
   return (
@@ -19,11 +18,6 @@ function Feed() {
       </SafeAreaView>
     </React.Fragment>
   );
-}
-
-
-function Covid_19() {
-  return CovidPostView;
 }
 
 function SettingsScreen() {
@@ -92,7 +86,12 @@ export default function TabNavigation(props) {
       >
         <Tab.Screen name="Home" component={HomeScreen} navigationOptions={{header: null}}/>
         <Tab.Screen name="Post" component={UpperScreen} />
-        <Tab.Screen name="COVID-19" component={CovidPostView} />
+        <Tab.Screen name="COVID-19" component={HomeScreen} listeners={{
+          tabPress: e => {
+            // Prevent default action
+            e.preventDefault();
+          }
+        }} />
         <Tab.Screen name="Feed" component={Feed} />
         <Tab.Screen name="Settings" component={SettingsScreen} /> 
       </Tab.Navigator>

@@ -81,7 +81,7 @@ export default function UpperScreen(){
             style={styles.checkbox}
             containerStyle={{backgroundColor: '#0000', borderColor: '#0000'}}
             textStyle={{color: 'white', fontSize: 17}}
-            title='Broadcast neighbourhood upadtes'
+            title='Broadcast neighbourhood updates'
             checked={tag2}
             disabled={tag1 || tag3}
             onPress={()=>tag2==false?setTag2(true):setTag2(false)}

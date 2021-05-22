@@ -4,7 +4,7 @@ import { backgroundBodyColor, displayNameColor, displayNameSize, displayPhotoSiz
 
 export default function UserDisplay(props){
     return (
-        <View>
+        <View style={styles.container}>
             <Image source={require('../../assets/user.png')} style={styles.displayPhoto}/>
             <Text style={styles.displayName}>{props.name}</Text>
         </View>
@@ -24,5 +24,10 @@ const styles = StyleSheet.create({
         color: displayNameColor,
         fontSize: displayNameSize,
         fontWeight: 'bold',
+    },
+    container: {
+        display: 'flex',
+        flexDirection: 'column',
+        alignItems: 'center'
     }
   });

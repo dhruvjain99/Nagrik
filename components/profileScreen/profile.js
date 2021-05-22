@@ -20,6 +20,6 @@ const styles = StyleSheet.create({
     Profile: {
         display: 'flex',
         alignItems: 'center',
-        marginTop: 5
+        marginTop: 30
     }    
 });

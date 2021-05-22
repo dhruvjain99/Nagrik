@@ -6,6 +6,7 @@ import Sectionbreak from '../commons/sectionbreak';
 export default function SocialConnect(){
     return (
         <View style={styles.container}>
+            <Sectionbreak/>
             <View style={styles.logoContainer}> 
                 <Ionicons name="logo-facebook" size={27} color="white"/>
                 <Ionicons name="logo-twitter" size={27} color="white"/>
