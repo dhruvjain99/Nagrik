@@ -7,6 +7,7 @@ import {displayNameColor, headerBackgroundColor} from '../commons/cssVariables';
 import UpperScreen from '../eventScreen/upperScreen.js';
 import backgroundStyle from '../commons/backgroundStyle';
 import { useNavigation } from '@react-navigation/native';
+import  SettingsScreen  from '../settingsScreen/settings.js';
 
 function Feed() {
   return (
@@ -14,18 +15,6 @@ function Feed() {
       <SafeAreaView style={backgroundStyle.container}>
         <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }}>
           <Text style= {{ color: 'white'}}>Feed screen coming soon!</Text>
-        </View>
-      </SafeAreaView>
-    </React.Fragment>
-  );
-}
-
-function SettingsScreen() {
-  return (
-    <React.Fragment>
-      <SafeAreaView style={backgroundStyle.container}>
-        <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }}>
-          <Text style= {{ color: 'white'}}>Settings screen coming soon!</Text>
         </View>
       </SafeAreaView>
     </React.Fragment>
@@ -59,8 +48,7 @@ export default function TabNavigation(props) {
               onValueChange={toggleSwitch}
               value={isEnabled}
               />              
-              {/* <Text style={{ color: "white", textAlign:"center", textAlignVertical:"bottom", fontSize: 8 }}>COVID-19</Text> */}
-              </View>
+               </View>
             }
               else if (route.name === 'Post') {
               iconName = 'ios-add-circle';
