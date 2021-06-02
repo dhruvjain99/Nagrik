@@ -12,6 +12,8 @@ import ContactView from './components/profileScreen/contactUs'
 import MyPostView from './components/profileScreen/myPosts'
 import MessageScreen from './components/chatScreen/messageScreen'
 import ChatScreen from './components/chatScreen/chatScreen'
+import EditPostScreen from './components/profileScreen/editMyPost.js';
+import  SettingsScreen  from './components/settingsScreen/settings.js';
 
 const Stack = createStackNavigator();
 
@@ -34,6 +36,9 @@ export default function App() {
         <Stack.Screen name="Contact" options={{headerShown: true, title: 'Contact Us', headerTintColor: '#fff', headerStyle: {backgroundColor: headerBackgroundColor}, headerTitleStyle: {color: '#fff'}}} component={ContactView} />
         <Stack.Screen name="Chat" options={{headerShown: true, title: 'Chat', headerTintColor: '#fff', headerStyle: {backgroundColor: headerBackgroundColor}, headerTitleStyle: {color: '#fff'}}} component={ChatScreen} />
         <Stack.Screen name="Messages" options={{headerShown: true, title: 'All Messages', headerTintColor: '#fff', headerStyle: {backgroundColor: headerBackgroundColor}, headerTitleStyle: {color: '#fff'}}} component={MessageScreen} />
+        <Stack.Screen name="EditPostScreen" options={{headerShown: true, title: 'Edit Post', headerTintColor: '#fff', headerStyle: {backgroundColor: headerBackgroundColor}, headerTitleStyle: {color: '#fff'}}} component={EditPostScreen} />
+        <Stack.Screen name="Settings" options={{headerShown: true, title: 'Settings', headerTintColor: '#fff', headerStyle: {backgroundColor: headerBackgroundColor}, headerTitleStyle: {color: '#fff'}}} component={SettingsScreen} />
+      
       </Stack.Navigator>
     </NavigationContainer>
   );

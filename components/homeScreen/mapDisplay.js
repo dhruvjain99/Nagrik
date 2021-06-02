@@ -9,7 +9,7 @@ import * as Location from 'expo-location';
 import * as SecureStore from 'expo-secure-store';
 import { GooglePlacesAutocomplete } from 'react-native-google-places-autocomplete';
 
-Geocoder.init('AIzaSyDA_JtMZ9iIIAwYGJqWuKGsmILsn5Mn0YA');
+Geocoder.init('API_KEY');
 
 const windowWidth = Dimensions.get('window').width;
 const windowHeight = Dimensions.get('window').height;
@@ -313,17 +313,24 @@ export default function MapDisplay()
         },
     });
     let responseJson = await response.json();
+    responseJson = responseJson.incidents;
+    
     var i;
     let markerInfo = [];
 
     for(i=0;i<responseJson.length;i++)
     {
+      // console.log(responseJson[i])
       var name = responseJson[i].name;
       var desc = responseJson[i].description;
       var lat = responseJson[i].location.coordinates[0];
       var lon = responseJson[i].location.coordinates[1];
-
-      var obj = {latitude: lat, longitude: lon, description: desc, title: name}
+      var isCovid = false;
+      if(responseJson[i].is_specialCovidPost){
+        isCovid=responseJson[i].is_specialCovidPost;
+      }
+      var markerColor = isCovid?'green':'red'
+      var obj = {latitude: lat, longitude: lon, description: desc, title: name, isCovid: isCovid, markerColor: markerColor}
       markerInfo.push(obj);
     }
     setMarkers(markerInfo);  
@@ -371,8 +378,6 @@ export default function MapDisplay()
                         }, {duration: 500}
                     )
             }}
-            // onRegionChange={(region)=>{setRegion(region);
-            // }}
             
             initialCamera={
             {
@@ -394,7 +399,7 @@ export default function MapDisplay()
               (
                 <Marker
                 key={markerID}
-                pinColor={'#295221'}
+                pinColor={marker.markerColor}
                 coordinate={{longitude: marker.longitude, latitude: marker.latitude}}
                 title={marker.title}
                 description={marker.description}
@@ -418,10 +423,10 @@ export default function MapDisplay()
           // renderDescription={row => row.description} // custom description render
           onPress={
             async function(data, details = null) {
-            console.log(data.description);
+            
             var searchText = data.description;
             var new_loc =   await UpdateLocation(searchText);
-                        console.log("5");
+                        
                         setRegion(new_loc);              
                         map.current.animateCamera(
                             {
@@ -440,7 +445,7 @@ export default function MapDisplay()
           }}
           query={{
             // available options: https://developers.google.com/places/web-service/autocomplete
-            key: 'AIzaSyDA_JtMZ9iIIAwYGJqWuKGsmILsn5Mn0YA',
+            key: 'API_KEY',
             language: 'en', // language of the results
             // types: '(cities)', // default: 'geocode'
           }}

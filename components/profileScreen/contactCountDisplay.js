@@ -7,10 +7,6 @@ export default function ContactCountDisplay(props){
     return (
         <View style={styles.container}> 
             <View>
-                <Text style={styles.mainText}>{props.communities} Communities</Text>
-                <Text style={styles.subText}>places</Text>
-            </View>
-            <View>
                 <Text style={styles.mainText}>{props.friends} Contacts</Text>
                 <Text style={styles.subText}>friends</Text>
             </View>
@@ -22,9 +18,10 @@ const styles = StyleSheet.create({
     container: {
         display: 'flex',
         alignItems: 'center',
+        alignContent: 'center',
         flexWrap: "nowrap",
         flexDirection: 'row',
-        justifyContent: 'space-between',
+        justifyContent: 'center',
         backgroundColor: contactCountDisplayContainerColor,
         width: '80%',
         paddingHorizontal: 22,

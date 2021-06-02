@@ -6,16 +6,12 @@ export default function PostCountDisplay(){
     return (
         <View style={styles.container}>
             <View>
-                <Text style={styles.value}>0</Text>
+                <Text style={styles.value}>10</Text>
                 <Text style={styles.label}>total</Text>
             </View>
             <View>
-                <Text style={styles.value}>0</Text>
-                <Text style={styles.label}>verified</Text>
-            </View>
-            <View>
-                <Text style={styles.value}>0</Text>
-                <Text style={styles.label}>views</Text>
+                <Text style={styles.value}>112</Text>
+                <Text style={styles.label}>upvotes</Text>
             </View>
         </View>
     );
