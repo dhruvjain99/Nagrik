@@ -1,6 +1,5 @@
 import React, { useState } from 'react';
 import { Dimensions, TextInput, View, StyleSheet, Text } from 'react-native';
-import { CheckBox } from 'react-native-elements'
 import { useNavigation } from '@react-navigation/native';
 import { TouchableOpacity } from 'react-native-gesture-handler';
 import Geocoder from 'react-native-geocoding';
