@@ -1,5 +1,5 @@
 import React, {useRef, useState, useEffect} from 'react';
-import { StyleSheet, Dimensions, View, Text, TouchableOpacity } from 'react-native';
+import { StyleSheet, Dimensions, View, TouchableOpacity } from 'react-native';
 import { fontGreen } from '../commons/cssVariables';
 import MapView, {Marker, PROVIDER_GOOGLE} from 'react-native-maps';
 import Geocoder from 'react-native-geocoding';
@@ -14,16 +14,14 @@ Geocoder.init('API_KEY');
 const windowWidth = Dimensions.get('window').width;
 const windowHeight = Dimensions.get('window').height;
 
-async function UpdateLocation(loc)
-{
-    let location_json = await Geocoder.from(loc)
-    let location = location_json.results[0].geometry.location;
-    return location; 
+async function UpdateLocation(loc) {
+  let location_json = await Geocoder.from(loc)
+  let location = location_json.results[0].geometry.location;
+  return location;
 }
 
 export default function MapDisplay()
 {
-    const [searchText, setSeachText] = useState('');
     const map = useRef(null); 
     const navigation = useNavigation();  
     const g=  [
@@ -303,7 +301,6 @@ export default function MapDisplay()
     
     async function plotIncidents(){
       const token = await SecureStore.getItemAsync('token');
-      // console.log(token);
       const response = await fetch('https://nagrik-backend.herokuapp.com/incidents/find', {
         method: 'GET',
         headers: {
@@ -311,29 +308,25 @@ export default function MapDisplay()
             'Content-Type': 'application/json',
             'Authorization': 'Bearer ' + token,
         },
-    });
-    let responseJson = await response.json();
-    responseJson = responseJson.incidents;
-    
-    var i;
-    let markerInfo = [];
-
-    for(i=0;i<responseJson.length;i++)
-    {
-      // console.log(responseJson[i])
-      var name = responseJson[i].name;
-      var desc = responseJson[i].description;
-      var lat = responseJson[i].location.coordinates[0];
-      var lon = responseJson[i].location.coordinates[1];
-      var isCovid = false;
-      if(responseJson[i].is_specialCovidPost){
-        isCovid=responseJson[i].is_specialCovidPost;
+      });
+      let responseJson = await response.json();
+      let markerInfo = [];
+      let incidents = responseJson.incidents;
+      for(let i=0;i < incidents.length;i++) {
+        var name = incidents[i].name;
+        var desc = incidents[i].description;
+        var lat = incidents[i].location.coordinates[1];
+        var lon = incidents[i].location.coordinates[0];
+        var isCovid = false;
+        if(responseJson[i].is_specialCovidPost){
+          isCovid=responseJson[i].is_specialCovidPost;
+        }
+        var markerColor = isCovid?'green':'red'
+        console.log(incidents[i]);
+        var obj = {latitude: lat, longitude: lon, description: desc, title: name, time: incidents[i].createdAt, isCovid: isCovid, markerColor: markerColor}
+        markerInfo.push(obj);
       }
-      var markerColor = isCovid?'green':'red'
-      var obj = {latitude: lat, longitude: lon, description: desc, title: name, isCovid: isCovid, markerColor: markerColor}
-      markerInfo.push(obj);
-    }
-    setMarkers(markerInfo);  
+      setMarkers(markerInfo);
     }
     
     useEffect(()=>{
@@ -403,7 +396,7 @@ export default function MapDisplay()
                 coordinate={{longitude: marker.longitude, latitude: marker.latitude}}
                 title={marker.title}
                 description={marker.description}
-                onPress={() => navigation.navigate('CovidPostView')}
+                onPress={() => navigation.navigate('NonCovidPostView', marker)}
                 
                 >
                 </Marker>
@@ -413,14 +406,12 @@ export default function MapDisplay()
             <View style={styles.container}>   
                 <Ionicons name="md-contact" size={35} color="white" onPress={() => navigation.navigate('Profile')}/>                   
                 <GooglePlacesAutocomplete
-                // style={GooglePlacesAutocompletestyle}
           placeholder="Around you"
           minLength={2} // minimum length of text to search
           autoFocus={false}
           returnKeyType={'search'} // Can be left out for default return key https://facebook.github.io/react-native/docs/textinput.html#returnkeytype
           listViewDisplayed="auto" // true/false/undefined
           fetchDetails={true}
-          // renderDescription={row => row.description} // custom description render
           onPress={
             async function(data, details = null) {
             
@@ -481,8 +472,6 @@ export default function MapDisplay()
               alignItems: 'center'
             }
           }}
-          // currentLocation={true} // Will add a 'Current location' button at the top of the predefined places list
-          // currentLocationLabel="Current location"
           nearbyPlacesAPI="GooglePlacesSearch" // Which API to use: GoogleReverseGeocoding or GooglePlacesSearch
           GoogleReverseGeocodingQuery={{
             // available options for GoogleReverseGeocoding API : https://developers.google.com/maps/documentation/geocoding/intro
@@ -490,13 +479,7 @@ export default function MapDisplay()
           GooglePlacesSearchQuery={{
             // available options for GooglePlacesSearch API : https://developers.google.com/places/web-service/search
             rankby: 'distance',
-            // types: 'food',
           }}
-          // filterReverseGeocodingByTypes={[
-          //   'locality',
-          //   'administrative_area_level_3',
-          // ]} // filter the reverse geocoding results by types - ['locality', 'administrative_area_level_3'] if you want to display only cities
-          // predefinedPlaces={[homePlace, workPlace]}
           debounce={200}
         />
 

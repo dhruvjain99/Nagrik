@@ -1,15 +1,12 @@
 import React, { useState } from 'react';
-import { Dimensions, TextInput, View, StyleSheet, Text } from 'react-native';
+import { TextInput, View, StyleSheet, ActivityIndicator, Text } from 'react-native';
 import { CheckBox } from 'react-native-elements'
-import { useNavigation } from '@react-navigation/native';
 import { TouchableOpacity } from 'react-native-gesture-handler';
+import * as Location from 'expo-location';
+import * as SecureStore from 'expo-secure-store';
 
-const windowWidth = Dimensions.get('window').width;
-const windowHeight = Dimensions.get('window').height;
-
-export default function UpperScreen(){
-  const navigation = useNavigation(); 
-    //variables to be sent to backend-title, desc, tag1,2,3 & location (to be added)
+export default function nonCovidForm({routes, navigation}){
+    let [uploadInProgress, setUploadInProgress] = useState(false);
     const [title, setTitle] = useState("");
     const [description, setDescription] = useState("");
     const [tag1, setTag1] = useState(false);
@@ -28,15 +25,41 @@ export default function UpperScreen(){
         return true;
         return false;
     }
-  function onNext() 
+  async function onNext() 
   {
 
      if(validatefield(title) && validatefield(description))
      {
         if((validatetag(tag1) || validatetag(tag2) || validatetag(tag3)) )
         {
-            navigation.navigate('LowerScreen', {title: title});
-                //pass variables as props to camera screen & redirect
+          let { status } = await Location.requestPermissionsAsync();
+          if (status !== 'granted') {
+            setErrorMsg('Permission to access location was denied');
+          }
+          let location = await Location.getCurrentPositionAsync({}); 
+          const token = await SecureStore.getItemAsync('token');
+          setUploadInProgress(true);
+          const response = await fetch('https://nagrik-backend.herokuapp.com/incidents/newIncident', {
+              method: 'POST',
+              headers: {
+                  'Accept': 'application/json',
+                  'Content-Type': 'application/json',
+                  'Authorization': 'Bearer ' + token,
+              },
+              body: JSON.stringify({
+                "name": title,
+                "description": description,      
+                "latitude": location.coords.latitude,
+                "longitude": location.coords.longitude,
+                "is_commAwareness": tag1,
+                "is_neighUpdate": tag2,
+                "is_emergency": tag3,
+                "is_verified": true,
+              })
+          });
+          setUploadInProgress(false);
+          let responseJson = await response.json();
+          navigation.navigate('eventRecordingScreen', {id: responseJson.IncidentID});
         }
         else{
             alert("Please choose an alert type")
@@ -101,6 +124,13 @@ export default function UpperScreen(){
             <Text style={{color:'white', fontSize: 20}}>Next</Text>
           </View>
         </TouchableOpacity>
+        {
+          uploadInProgress && 
+          <View style={styles.loading}>
+              <ActivityIndicator size='large' color="#fff" />
+              <Text style={{marginTop: 20, color: '#fff'}}>Creating new post ...</Text>
+          </View>
+        }
       </View>
     );
 }
@@ -171,5 +201,17 @@ heading: {
     flexDirection: 'row',
 
   },
+  loading: {
+        position: 'absolute',
+        left: 0,
+        right: 0,
+        top: 0,
+        bottom: 0,
+        alignItems: 'center',
+        justifyContent: 'center',
+        flexDirection: 'column',
+        backgroundColor: '#6c6d6ee6',
+        color: '#fff'
+    }
 });
 

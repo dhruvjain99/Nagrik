@@ -19,6 +19,15 @@ export default function Redirect(){
                     <Ionicons name="ios-arrow-forward" size={30} color={displayNameColor}/>
                 </View>
             </TouchableHighlight>
+            <TouchableHighlight style={styles.touchContainer} onPress={() => navigation.navigate('AddFriend')}>
+                <View style={styles.link}>
+                    <View style={styles.labelContainer}>
+                        <Ionicons name="md-person-add" size={30} color={fontGreen}/>
+                        <Text style={styles.label}>Add Friends</Text>
+                    </View>
+                    <Ionicons name="ios-arrow-forward" size={30} color={displayNameColor}/>
+                </View>
+            </TouchableHighlight>
             <TouchableHighlight style={styles.touchContainer} onPress={() => navigation.navigate('Contact')}>
                 <View style={styles.link}>
                     <View style={styles.labelContainer}>
@@ -50,7 +59,7 @@ const styles = StyleSheet.create({
         marginTop: 30
     },
     label: {
-        marginLeft: 12,
+        marginLeft: 15,
         textTransform: "uppercase",
         fontWeight: "bold",
         fontSize: 15,
@@ -61,5 +70,6 @@ const styles = StyleSheet.create({
         display: 'flex',
         flexDirection: 'row',
         alignItems: "center",
+        justifyContent: "space-around"
     }
 });
