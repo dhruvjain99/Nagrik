@@ -1,38 +1,39 @@
 import React, { useState, useEffect } from 'react';
-import { Text, View, TouchableOpacity } from 'react-native';
+import { Text, View, StyleSheet, ActivityIndicator, TouchableOpacity } from 'react-native';
 import { Camera } from 'expo-camera';
 import { Ionicons } from '@expo/vector-icons';
 import * as Permissions from 'expo-permissions';
-import { useNavigation } from '@react-navigation/native';
+import * as SecureStore from 'expo-secure-store';
 
-export default function LowerScreen() {
-  const navigation = useNavigation();  
+export default function eventRecordingScreen({ route, navigation }) {
+  let [uploadInProgress, setUploadInProgress] = useState(false);
   const [hasPermission, setHasPermission] = useState(null);
   const [cameraRef, setCameraRef] = useState(null)
   const [recording, setRecording] = useState(false)
   const [type, setType] = useState(Camera.Constants.Type.back);
   const [flash, setFlash] = useState(Camera.Constants.FlashMode.off);
-useEffect(() => {
-    (async () => {
-      const { status } = await Promise.all([
-          Permissions.askAsync(Permissions.CAMERA),
-          Permissions.askAsync(Permissions.AUDIO_RECORDING),
-      ]);
-      setHasPermission(status !== 'granted');
-    })();
-  }, []);
-if (hasPermission === null) {
-    return <View />;
-  }
-  if (hasPermission === false) {
-    return <Text>No access to camera</Text>;
-  }
+  const { incidentId } = route.params;
+  useEffect(() => {
+      (async () => {
+        const { status } = await Promise.all([
+            Permissions.askAsync(Permissions.CAMERA),
+            Permissions.askAsync(Permissions.AUDIO_RECORDING),
+        ]);
+        setHasPermission(status !== 'granted');
+      })();
+    }, []);
+  if (hasPermission === null) {
+      return <View />;
+    }
+    if (hasPermission === false) {
+      return <Text>No access to camera</Text>;
+    }
 
   return (
     <View style={{ flex: 1 }}>
       <Camera style={{ flex: 1 }} type={type} ref={ref => {
         setCameraRef(ref) ;
-  }}>
+    }}>
         <View
           style={{
             flex: 1,
@@ -47,7 +48,6 @@ if (hasPermission === null) {
             }}>
           <TouchableOpacity
             style={{
-           // flex: 0.2,
               alignSelf: 'flex-end'
             }}
             onPress={() => {
@@ -60,22 +60,43 @@ if (hasPermission === null) {
             <Ionicons name={ Platform.OS === 'ios' ? "ios-reverse-camera" : 'md-reverse-camera'} size={40} color="white" />
           </TouchableOpacity>
             <TouchableOpacity style={{alignSelf: 'center'}} onPress={async() => {
-                let video;
               if(!recording){
                 setRecording(true)
-                video = await cameraRef.recordAsync();
-                console.log('video', video);
+                const { uri, codec = "mp4" } = await cameraRef.recordAsync();
+
+                const type = `video/${codec}`;
+                const data = new FormData();
+                
+                data.append("file", {
+                  name: `IncidentId-${incidentId}`,
+                  type,
+                  uri
+                });
+                
+                try {
+                  const token = await SecureStore.getItemAsync('token');
+                  const response = await fetch('https://nagrik-backend.herokuapp.com/incidents/newIncidentVideo', {
+                    method: "post",
+                    headers: {
+                      'Accept': 'application/json',
+                      'Authorization': 'Bearer ' + token,
+                    },
+                    body: data
+                  });
+                  let responseJson = await response.json();
+                  console.log(responseJson);
+                  alert("Incident created successfully.")
+                } catch (e) {
+                  console.error(e);
+                  alert("Sorry, try again!")
+                }
+                setUploadInProgress(false);
+                navigation.navigate('TabNavigation')
               } 
             else {
                 setRecording(false)
-                cameraRef.stopRecording()
-                // alert(route.params.title)
-                // console.log(route.params.paramKey)
-                alert("Incident created successfully.")
-                navigation.navigate('TabNavigation')
-               
-                //empty form
-                
+                cameraRef.stopRecording();
+                setUploadInProgress(true);
             }
           }}>
             <View style={{ 
@@ -99,7 +120,6 @@ if (hasPermission === null) {
             </TouchableOpacity>
             <TouchableOpacity
             style={{
-            //flex: 0.2,
               alignSelf: 'flex-end'
             }}>
           <Ionicons name={ Platform.OS === 'ios' ? "ios-flash":"md-flash"} size={40} color="white" />
@@ -107,18 +127,33 @@ if (hasPermission === null) {
         </View>
         </View>
       </Camera>
+      {
+        uploadInProgress && 
+        <View style={styles.loading}>
+            <ActivityIndicator size='large' color="#fff" />
+            <Text style={{marginTop: 20, color: '#fff'}}>Uploading ...</Text>
+        </View>
+      }
     </View>
   );
   
 }
 
+const styles = StyleSheet.create({
+    loading: {
+        position: 'absolute',
+        left: 0,
+        right: 0,
+        top: 0,
+        bottom: 0,
+        alignItems: 'center',
+        justifyContent: 'center',
+        flexDirection: 'column',
+        backgroundColor: '#6c6d6ee6',
+        color: '#fff'
+    }
+})
 
-
-
-
-
- 
-              
            
         
      

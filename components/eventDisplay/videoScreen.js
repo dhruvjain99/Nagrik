@@ -14,9 +14,10 @@ export default class VideoScreen extends React.Component {
         shouldPlay: true,
         resizeMode: Video.RESIZE_MODE_COVER,
         source: {
-          uri: 'http://commondatastorage.googleapis.com/gtv-videos-bucket/sample/BigBuckBunny.mp4',
+          uri: `https://nagrik-backend.herokuapp.com/incidents/play/`,
         },     
       }}
+      height={740}
       inFullscreen={false}
     />					
       </View>
